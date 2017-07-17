@@ -1,0 +1,18 @@
+<div class="ng-picker-container">
+	<div class="m-picker-input">
+		<input class="w-picker-input" type="text" name="ng-picker-value" ng-model="vmDtp.formatVal" placeholder="{{vmDtp.Scope.placeholder}}" ng-click="vmDtp.viewMethods.toggleRangePanel(true)"/>
+	</div>
+	<div class="m-picker-panel" ng-class="{'m-picker-dropdown': vmDtp.panelStatus}">
+		<ng-calendar-picker class="m-calendar-picker" activate-time="vmDtp.selectingTime" date-vars="vmDtp.startTime"></ng-calendar-picker>
+		<ng-calendar-picker class="m-calendar-picker" activate-time="vmDtp.selectingTime" date-vars="vmDtp.endTime"></ng-calendar-picker>
+
+		<div class="m-calendar-opt">
+			<span class="w-time-btn" ng-show="!vmDtp.selectingTime" ng-click="vmDtp.viewMethods.openPanel('time')">选择时间</span>
+			<span class="w-time-btn" ng-show="vmDtp.selectingTime" ng-click="vmDtp.viewMethods.openPanel('date')">选择日期</span>
+			<span class="w-clear-btn" ng-click="vmDtp.viewMethods.clearPick()">清空</span>
+			<span class="w-done-btn" ng-click="vmDtp.viewMethods.donePick()">确定</span>
+		</div>
+	</div>
+</div>
+
+<div class="ng-picker-mask" ng-class="{'hide': vmDtp.panelStatus === false}" ng-click="vmDtp.viewMethods.toggleRangePanel(false)"></div>

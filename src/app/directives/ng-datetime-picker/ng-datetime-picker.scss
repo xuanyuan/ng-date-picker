@@ -1,0 +1,124 @@
+@import '../common/variables.scss';
+
+$inputColor: rgba(0, 0, 0, 0.87);
+$inputBd: rgba(0,0,0,.12);
+
+ng-datetime-picker{
+	display: block;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	*, :after, :before {
+		box-sizing: border-box;
+	}
+	.ng-picker-mask{
+		display: block;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		filter: 0;
+		left: 0;
+		top: 0;
+		z-index: 99;
+		&.hide{
+			display: none;
+		}
+	}
+	
+	.ng-picker-container{
+		position: relative;
+		z-index: 100;
+		.m-picker-input{
+			.w-picker-input{
+				min-width: 200px;
+				max-width: 320px;
+				width: 100%;
+				height: 32px;
+				font-size: 14px;
+				line-height: 1.5;
+				background-image: none;
+				border: none;
+				outline: none;
+				margin-left: 4px;
+				color: $inputColor;
+				cursor: pointer;
+				border-bottom: 1px solid $inputBd;
+				&:focus{
+					border-bottom: 2px solid $inputColor;
+				}
+			}
+		}
+		.m-picker-panel{
+			position: relative;
+			width: 450px;
+			height: 300px;
+			box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 6px 0px;
+			padding: 5px;
+			margin-top: 5px;
+			opacity: 0;
+			transform-origin: center top 0px;
+			transform: scaleY(0);
+			transition: all 0.3s ease;
+			&.m-picker-dropdown{
+				opacity: 1;
+				transform-origin: center top 0px;
+				transform: scaleY(1);
+			}
+			&:after {
+				position: absolute;
+			    top: 0;
+			    clear: both;
+			    content: '.';
+			    visibility: hidden;
+			}
+			.m-calendar-picker{
+				float: left;
+				&:nth-child(2){
+					margin-left: 8px;
+				}
+			}
+
+			.m-calendar-opt{
+				clear: both;
+				position: relative;
+				font-size: 12px;
+				color: $fontColor;
+				padding: 10px 5px 5px 5px;
+			    width: 100%;
+			    line-height: 24px;
+			    height: 40px;
+				border-top: 1px solid $secondaryColor;
+				&>span{
+					display: inline-block;
+					cursor: pointer;
+					&.w-time-btn{
+						color: $activeColor;
+					}
+					&.w-clear-btn{
+						position: absolute;
+						right: 3.6rem;
+						&:hover{
+							color: $activeColor;
+						}
+					}
+					&.w-done-btn{
+						position: absolute;
+						right: 6px;
+						width: 2.5rem;
+						background-color: $activeColor;
+						color: #fff;
+						border-radius: 2px;
+						height: 24px;
+						text-align: center;
+						transition: all .2s ease-in-out;
+						&:hover{
+							background-color: $btnHoverColor;
+						}
+					}
+				}
+			}
+
+		}
+	}
+}
