@@ -22,7 +22,7 @@ export function NgDatetimePicker() {
 }
 
 class NgDatetimePickerController {
-	constructor($document, $element, $scope, moment, $log) {
+	constructor($document, $element, $scope, moment) {
 		'ngInject';
 		this.Document = $document;
 		this.Element = $element;
@@ -57,7 +57,7 @@ class NgDatetimePickerController {
 	}
 
 	getConf(){
-		let moment = this.Moment;
+		// let moment = this.Moment;
 		let methods = this.methods;
 		
 		this.format = this.Scope.format ? this.Scope.format : "YYYY-MM-DD HH:mm:ss";
@@ -86,7 +86,7 @@ class NgDatetimePickerController {
 			formatMoment(m){
 				let standardMoment = moment();
 
-				if(typeof m === 'number'){
+				if(angular.isNumber(m)){
 					// 对象是时间戳
 					standardMoment = moment(m);
 				} else if(m == undefined){

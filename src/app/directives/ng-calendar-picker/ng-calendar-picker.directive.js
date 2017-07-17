@@ -43,7 +43,7 @@ class NgCalendarPickerController {
 			this.panel = (v === true ? 'time-panel' : 'date-panel');
 		});
 
-		this.Scope.$watch('dateVars', v => {
+		this.Scope.$watch('dateVars', () => {
 			this.getConf();
 		})
 	}
@@ -197,6 +197,7 @@ class NgCalendarPickerController {
 	// 组件视图全局方法
 	setViewMethods() {
 		let vm = this;
+		let moment = this.Moment;
 		this.viewMethods = {
 			selectDate(d, index) {
 				if(!d.active) return;

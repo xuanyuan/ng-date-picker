@@ -6,10 +6,9 @@
 
 Installation
 -------------
-bower:  
-`bower install --save ob-daterangepicker`  
+
 npm:  
-`npm install --save ob-daterangepicker`
+`npm install --save ng-datetime-picker`
 
 ----------
 

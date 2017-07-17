@@ -196,11 +196,11 @@ ng-calendar-picker{
 				transition: all .2s ease-in-out;
 				&.prev{
 					left: $arrDist;
-					border-right: $secondaryColor $thick solid;
+					border-right: $lightGrey $thick solid;
 				}
 				&.next{
 					right: $arrDist;
-					border-left: $secondaryColor $thick solid;
+					border-left: $lightGrey $thick solid;
 				}
 				&.prev:hover{
 					border-right: $activeColor $thick solid;
