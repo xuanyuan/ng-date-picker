@@ -94,15 +94,15 @@ ng-calendar-picker{
 				border-radius: 0;
 				cursor: pointer;
 				transition: all .2s ease-in-out;
-				&.selected{
-					color: #fff;
-					border-radius: 4px;
-					background-color: $activeColor;
-				}
 				&:hover{
 					color: $activeColor;
 					border-radius: 4px;
 					background-color: $hoverColor;
+				}
+				&.selected{
+					color: #fff;
+					border-radius: 4px;
+					background-color: $activeColor;
 				}
 			}
 

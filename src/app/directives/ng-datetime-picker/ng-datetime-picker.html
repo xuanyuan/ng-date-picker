@@ -5,7 +5,7 @@
 	<div class="m-picker-panel" ng-class="{'m-picker-dropdown': vmDtp.panelStatus, 'picker-has-config': vmDtp.config}">
 
 		<div class="m-picker-config">
-			
+			<span class="config-item" ng-repeat="conf in vmDtp.config" ng-click="vmDtp.viewMethods.selectConfig(conf)">{{conf.name}}</span>
 		</div>
 
 		<ng-calendar-picker class="m-calendar-picker" should-range="vmDtp.bothSelect" sign="{{'left'}}" activate-time="vmDtp.selectingTime" date-vars="vmDtp.startTime"></ng-calendar-picker>

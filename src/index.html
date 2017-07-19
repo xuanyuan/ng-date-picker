@@ -51,7 +51,7 @@
 			class="m-parent-box" 
 			style="width: 280px;" 
 			range="rctrl.range"
-			config="{{rctrl.rangeConf}}"
+			config="rctrl.rangeConf"
 			placeholder="请选择日期范围"
 			format="YY-MM-DD HH:mm:ss"></ng-datetime-picker>
 	</div>
@@ -92,6 +92,11 @@
 					name: '当前月',
 					start: moment().startOf('month'),
 					end: moment()
+				},
+				{
+					name: '一年又两个月',
+					start: moment().subtract(1, 'M'),
+					end: moment().add(1, 'y').add(1, 'M')
 				}
 			];
 

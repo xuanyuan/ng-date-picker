@@ -9,6 +9,7 @@ ng-datetime-picker{
 	-moz-user-select:none;
 	-ms-user-select:none;
 	user-select:none;
+	color: #444;
 	*, :after, :before {
 		box-sizing: border-box;
 	}
@@ -83,10 +84,28 @@ ng-datetime-picker{
 
 			.m-picker-config{
 				display: none;
+			    overflow-y: auto;
+			    overflow-x: hidden;
 				width: 100px;
 			    height: 100%;
 			    float: left;
 			    border-right: 1px solid #eee;
+			    .config-item{
+			    	display: block;
+				    width: 90px;
+				    text-align: center;
+				    height: 30px;
+				    border-radius: 2px;
+				    margin: 4px;
+				    line-height: 30px;
+				    font-size: 12px;
+				    cursor: pointer;
+				    background: #fff;
+				    transition: background .2s ease-in-out;
+				    &:hover{
+				    	background: #eee;
+				    }
+			    }
 			}
 
 			&.picker-has-config{

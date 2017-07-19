@@ -6,7 +6,7 @@ export function NgDatetimePicker() {
 		scope: {
 			range: '=',
 			format: '@',
-			config: '@',
+			config: '=',
 			placeholder: '@',
 			diff: '='
 		},
@@ -37,7 +37,8 @@ class NgDatetimePickerController {
 		this.setWatchers();
 		this.getConf();
 		this.setViewRange();
-		this.config = this.Scope.config;
+		this.config = angular.fromJson(this.Scope.config);
+		console.log(this.config);
 	}
 
 	setWatchers(){
@@ -77,9 +78,7 @@ class NgDatetimePickerController {
 	}
 
 	getConf(){
-		// let moment = this.Moment;
 		let methods = this.methods;
-		
 		this.format = this.Scope.format ? this.Scope.format : "YYYY-MM-DD HH:mm:ss";
 		this.formatVal = methods.getFormatVal(this.startTime, this.endTime);
 	}
@@ -139,7 +138,16 @@ class NgDatetimePickerController {
 				}else {
 					vm.selectingTime = false;
 				}
-				
+			},
+			selectConfig(conf){
+				let range = vm.Scope.range;
+				range.start = conf.start;
+				range.end = conf.end;
+				vm.startTime = conf.start;
+				vm.endTime = conf.end;
+				vm.getConf();
+				console.log(vm.formatVal);
+				vm.panelStatus = false;
 			},
 			toggleRangePanel(status){
 				vm.panelStatus = status;
