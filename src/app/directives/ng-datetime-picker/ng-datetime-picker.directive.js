@@ -6,7 +6,7 @@ export function NgDatetimePicker() {
 		scope: {
 			range: '=',
 			format: '@',
-			config: '=',
+			config: '@',
 			placeholder: '@',
 			diff: '='
 		},
@@ -36,6 +36,8 @@ class NgDatetimePickerController {
 		this.setViewMethods();
 		this.setWatchers();
 		this.getConf();
+		this.setViewRange();
+		this.config = this.Scope.config;
 	}
 
 	setWatchers(){
@@ -44,16 +46,34 @@ class NgDatetimePickerController {
 		this.startTime = methods.formatMoment(range.start);
 		this.endTime = methods.formatMoment(range.end);
 
-		// 观察时间
+		// 观察时间，开始时间不得大于结束时间，否则互换
 		this.Scope.$watch('vmDtp.startTime', v => {
+			if(v && this.endTime && v.valueOf() > this.endTime.valueOf()){
+				let temp = v;
+				this.startTime = this.endTime;
+				this.endTime = temp;
+			}
 			range.start = v;
 			this.getConf();
+			this.setViewRange();
 		}, true);
 
 		this.Scope.$watch('vmDtp.endTime', v => {
+			if(v && this.startTime && v.valueOf() < this.startTime.valueOf()){
+				let temp = v;
+				this.endTime = this.startTime;
+				this.startTime = temp;
+			}
 			range.end = v;
 			this.getConf();
+			this.setViewRange();
 		}, true);
+
+		this.Scope.$watch('vmDtp.panelStatus', v => {
+			if(v){
+				this.selectingTime = false;
+			}
+		});
 	}
 
 	getConf(){
@@ -62,6 +82,15 @@ class NgDatetimePickerController {
 		
 		this.format = this.Scope.format ? this.Scope.format : "YYYY-MM-DD HH:mm:ss";
 		this.formatVal = methods.getFormatVal(this.startTime, this.endTime);
+	}
+
+	// 设定视图选择范围
+	setViewRange(){
+		if(this.startTime && this.endTime){
+			this.bothSelect = true;
+		} else {
+			this.bothSelect = false;
+		}
 	}
 
 	setToolMethods() {

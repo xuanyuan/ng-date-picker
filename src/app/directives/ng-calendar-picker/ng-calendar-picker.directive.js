@@ -5,7 +5,8 @@ export function NgCalendarPicker() {
 		restrict: 'E',
 		scope: {
 			dateVars: '=',
-			operation: '=',
+			shouldRange: '=',
+			sign: '@',
 			activateTime: '='
 		},
 		controller: NgCalendarPickerController,
@@ -38,14 +39,22 @@ class NgCalendarPickerController {
 		this.setViewMethods();
 		this.getStaticConf();
 		this.getConf();
+		this.setWatchers();
+	}
 
+	setWatchers(){
 		this.Scope.$watch('activateTime', v => {
 			this.panel = (v === true ? 'time-panel' : 'date-panel');
 		});
 
 		this.Scope.$watch('dateVars', () => {
 			this.getConf();
-		})
+		});
+
+		this.Scope.$watch('shouldRange', v => {
+
+		});
+
 	}
 
 	// 静态不会变化的配置
@@ -270,13 +279,9 @@ class NgCalendarPickerController {
 				vm.panel = name;
 			},
 			// 选择结束
-			donePick(){
-
-			},
+			donePick(){ },
 			// 清空选择
-			clearPick(){
-
-			}
+			clearPick(){ }
 		};
 	}
 }

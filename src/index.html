@@ -44,13 +44,14 @@
 	<!-- angular templates will be automatically converted in js and inserted here -->
 	<!-- endinject -->
 	<!-- endbuild -->
-	<div ng-controller="RangeController as range">
+	<div ng-controller="RangeController as rctrl">
 		<h1>日期时间组件（ng1.x）</h1>
-		<h2>{{range.rangeFx.start.format("YYYY-MM-DD HH:mm:ss")}} - {{range.rangeFx.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
+		<h2>{{rctrl.range.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.range.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
 		<ng-datetime-picker 
 			class="m-parent-box" 
 			style="width: 280px;" 
-			range="range.rangeFx"
+			range="rctrl.range"
+			config="{{rctrl.rangeConf}}"
 			placeholder="请选择日期范围"
 			format="YY-MM-DD HH:mm:ss"></ng-datetime-picker>
 	</div>
@@ -68,74 +69,32 @@
 			// console.log(getMonthDateRange(2017, i));
 		}
 		function RangeCtrl() {
-			var _this = this;
-			//this.weekStart = 'su';
-			this.dateRangeApi = {};
-			this.dropsUp = false;
-			this.opens = 'left';
-			this.disabled = false;
-			this.format = 'DD-MM-YYYY';
-			this.autoApply = false;
-			this.linked = true;
-			this.calendarsAlwaysOn = true;
-			this.postfix = '';
+			var vm = this;
 
-			this.rangeFx = {
+			this.range = {
 				start: Date.now(),
 				// end: moment().month(11).add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')
 				end: null
 			};
 
-			this.range = {
-				start: moment(),
-				end: moment()
-			};
-			this.rangeWindow = null;
-
-			this.ranges = [
+			this.rangeConf = [
 				{
-					name: 'Today',
-					start: moment(),
-					end: moment()
+					name: '今天',
+					start: moment().startOf('day'),
+					end: moment().endOf('day')
 				},
 				{
-					name: 'Yesterday',
+					name: '昨天',
 					start: moment().subtract(1, 'd'),
 					end: moment().subtract(1, 'd')
 				},
 				{
-					name: 'Current Month',
+					name: '当前月',
 					start: moment().startOf('month'),
 					end: moment()
 				}
 			];
 
-			this.rangeApplied = function (start, end) {
-				console.log(start, end);
-			};
-
-			this.setDateRange = function () {
-				_this.dateRangeApi.setDateRange({
-					start: moment(),
-					end: moment().add(2, 'd')
-				});
-			};
-
-			this.render = function (e) {
-				console.log(this.calendarsAlwaysOn);
-				if (e) {
-					e.keyCode == 13 && this.dateRangeApi.render();
-				} else {
-					_this.dateRangeApi.render()
-				}
-			};
-
-			this.setRange = function () {
-				this.dateRangeApi.setDateRange({
-					start: moment().subtract(1, 'd'),
-					end: moment().subtract(1, 'd')
-				});
-			}
 		}
 	</script>
 

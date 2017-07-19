@@ -1,10 +1,15 @@
 <div class="ng-picker-container">
-	<div class="m-picker-input">
+	<div class="m-picker-input" ng-class="{'drop-down': vmDtp.panelStatus}">
 		<input class="w-picker-input" type="text" name="ng-picker-value" ng-model="vmDtp.formatVal" placeholder="{{vmDtp.Scope.placeholder}}" ng-click="vmDtp.viewMethods.toggleRangePanel(true)"/>
 	</div>
-	<div class="m-picker-panel" ng-class="{'m-picker-dropdown': vmDtp.panelStatus}">
-		<ng-calendar-picker class="m-calendar-picker" activate-time="vmDtp.selectingTime" date-vars="vmDtp.startTime"></ng-calendar-picker>
-		<ng-calendar-picker class="m-calendar-picker" activate-time="vmDtp.selectingTime" date-vars="vmDtp.endTime"></ng-calendar-picker>
+	<div class="m-picker-panel" ng-class="{'m-picker-dropdown': vmDtp.panelStatus, 'picker-has-config': vmDtp.config}">
+
+		<div class="m-picker-config">
+			
+		</div>
+
+		<ng-calendar-picker class="m-calendar-picker" should-range="vmDtp.bothSelect" sign="{{'left'}}" activate-time="vmDtp.selectingTime" date-vars="vmDtp.startTime"></ng-calendar-picker>
+		<ng-calendar-picker class="m-calendar-picker" should-range="vmDtp.bothSelect" sign="{{'right'}}" activate-time="vmDtp.selectingTime" date-vars="vmDtp.endTime"></ng-calendar-picker>
 
 		<div class="m-calendar-opt">
 			<span class="w-time-btn" ng-show="!vmDtp.selectingTime" ng-click="vmDtp.viewMethods.openPanel('time')">选择时间</span>
