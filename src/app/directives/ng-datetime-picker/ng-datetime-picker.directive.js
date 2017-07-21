@@ -38,7 +38,6 @@ class NgDatetimePickerController {
 		this.getConf();
 		this.setViewRange();
 		this.config = angular.fromJson(this.Scope.config);
-		console.log(this.config);
 	}
 
 	setWatchers(){
