@@ -4,7 +4,7 @@ $inputColor: rgba(0, 0, 0, 0.87);
 $inputBd: rgba(0,0,0,.12);
 
 ng-datetime-picker{
-	display: block;
+	display: inline-block;
 	-webkit-user-select:none;
 	-moz-user-select:none;
 	-ms-user-select:none;
@@ -73,7 +73,7 @@ ng-datetime-picker{
 		.m-picker-panel{
 			position: relative;
 			width: 450px;
-			height: 300px;
+			height: 0;
 			box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 6px 0px;
 			padding: 5px;
 			margin-top: 5px;
@@ -119,6 +119,7 @@ ng-datetime-picker{
 				opacity: 1;
 				transform-origin: center top 0px;
 				transform: scaleY(1);
+				height: 300px;
 			}
 			&:after {
 				position: absolute;
