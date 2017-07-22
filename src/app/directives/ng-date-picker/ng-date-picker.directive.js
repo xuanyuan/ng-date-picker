@@ -33,16 +33,24 @@ class NgDatePickerController {
 	}
 
 	init(){
-		this.setBaseConf();
+		this.setStaticConf();
+		this.setViewMethods();
 	}
 
-	setBaseConf(){
+	setStaticConf(){
 		const Scope = this.Scope;
-		console.log(Scope);
 		this.format = Scope.format;
 		this.value = Scope.value;
 		this.options = Scope.options;
 		this.placeholder = Scope.placeholder;
 		this.formatVal = '';
+	}
+
+	setViewMethods(){
+		this.viewMethods = {
+			selectOption(conf){
+				
+			}
+		}
 	}
 }

@@ -1,0 +1,58 @@
+<div class="ng-calendar-container" ng-class="{'shadow': vmCp.Scope.operation == true}">
+	<!-- 选择年月 -->
+	<div class="w-cells-ymheader">
+		<div class="w-cells-ymheader-inner">
+			<span class="u-btn-year" ng-click="vmCp.viewMethods.showPanel('year-panel')">{{vmCp.yearNow | timeNow : 'year'}}年</span>
+			<span class="u-btn-month" ng-click="vmCp.viewMethods.showPanel('month-panel')">{{vmCp.monthNow + 1 | timeNow : 'month'}}月</span>
+		</div>
+		<span ng-show="vmCp.panel === 'year-panel'" class="w-switch-btn prev" ng-click="vmCp.viewMethods.jumpRangeYears(-1)"></span>
+		<span ng-show="vmCp.panel === 'year-panel'" class="w-switch-btn next" ng-click="vmCp.viewMethods.jumpRangeYears(1)"></span>
+	</div>
+	
+	<!-- 选择日期 -->
+	<div class="m-table-calendar" ng-show="vmCp.panel === 'date-panel'">
+		<!-- 日历头（星期）-->
+		<div class="w-cells-header">
+			<span class="w-cells-cell" ng-repeat="d in vmCp.weekConf">{{d}}</span>
+		</div>
+		<!--日历日期-->
+		<div class="w-cells-body">
+			<span class="w-cells-cell" ng-repeat="d in vmCp.dateConf" ng-class="{'disabled': d.active !== true, 'selected': $index === vmCp.selectedDate.index}"
+			 ng-click="vmCp.viewMethods.selectDate(d, $index)">{{d.num}}</span>
+		</div>
+	</div>
+
+	<!-- 选择月份 -->
+	<div class="m-table-calendar" ng-show="vmCp.panel === 'month-panel'">
+		<div class="w-cells-month">
+			<span class="w-cells-cell-month" ng-repeat="m in vmCp.monthConf" ng-class="{'selected': vmCp.monthNow == $index}" ng-click="vmCp.viewMethods.selectMonth(m)">{{m}}</span>
+		</div>
+	</div>
+
+	<!-- 选择年份 -->
+	<div class="m-table-calendar" ng-show="vmCp.panel === 'year-panel'">
+		<div class="w-cells-year">
+			<span class="w-cells-cell-year" ng-repeat="y in vmCp.yearConf" ng-class="{'selected': vmCp.yearNow == y}" ng-click="vmCp.viewMethods.selectYear(y)">{{y}}</span>
+		</div>
+	</div>
+
+	<!-- 选择时间 -->
+	<div class="m-table-calendar m-table-time" ng-show="vmCp.panel === 'time-panel'">
+		<div class="w-hour-scroll">
+			<span class="u-time-cell" ng-repeat="h in vmCp.hourConf" ng-class="{'selected': vmCp.hourNow == $index}" ng-click="vmCp.viewMethods.selectTime('h', $index)">{{h}}</span>
+		</div>
+		<div class="w-min-scroll">
+			<span class="u-time-cell" ng-repeat="m in vmCp.minConf" ng-class="{'selected': vmCp.minNow == $index}" ng-click="vmCp.viewMethods.selectTime('m', $index)">{{m}}</span>
+		</div>
+		<div class="w-sec-scroll">
+			<span class="u-time-cell" ng-repeat="s in vmCp.secConf" ng-class="{'selected': vmCp.secNow == $index}" ng-click="vmCp.viewMethods.selectTime('s', $index)">{{s}}</span>
+		</div>
+	</div>
+
+	<!-- 底部操作栏 -->
+	<div class="m-table-footer" ng-show="vmCp.Scope.operation === true">
+		<span class="w-time-btn" ng-click="vmCp.viewMethods.showPanel('time-panel')">选择时间</span>
+		<span class="w-clear-btn" ng-click="vmCp.viewMethods.clearPick()">清空</span>
+		<span class="w-done-btn" ng-click="vmCp.viewMethods.donePick()">确定</span>
+	</div>
+</div>

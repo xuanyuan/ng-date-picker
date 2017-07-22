@@ -2,4 +2,23 @@
 	<div class="m-picker-input">
 		<input class="w-picker-input" type="text" name="ng-picker-input" ng-model="vmDp.formatVal" placeholder="{{vmDp.placeholder}}" />
 	</div>
+	<div class="m-picker-dropdown">
+		<div class="w-picker-conf">
+			<span class="config-item" ng-repeat="conf in vmDp.options" ng-click="vmDp.viewMethods.selectOption(conf)">{{conf.name}}</span>
+		</div>
+		<div class="w-picker-panel">
+			<div class="panel-left">
+				<ng-calendar-picker></ng-calendar-picker>	
+				<ng-time-picker value="vmDp.value.start"></ng-time-picker>
+			</div>
+			<span class="u-divide-panel"></span>
+			<div class="panel-right">
+				<ng-calendar-picker></ng-calendar-picker>	
+				<ng-time-picker value="vmDp.value.end"></ng-time-picker>
+			</div>
+		</div>
+		<div class="w-picker-option">
+			
+		</div>
+	</div>
 </div>

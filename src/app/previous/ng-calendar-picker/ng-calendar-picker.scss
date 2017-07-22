@@ -1,0 +1,217 @@
+@import '../common/variables.scss';
+
+ng-calendar-picker{
+	.ng-calendar-container{
+		position: relative;
+		width: 216px;
+		height: auto;
+		font-size: 12px;
+		font-family: 'Helvetica Neue', 'Helvetica', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei';
+		
+		.shadow{
+			box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 6px 0px;
+		}
+		.w-cells-ymheader{
+			position: relative;
+			width: 100%;
+			height: 36px;
+			border-bottom: 1px solid #eee; 
+			.w-cells-ymheader-inner{
+				margin: 0 auto;
+				height: 100%;
+				width: 80px;
+				line-height: 36px;
+				text-align: center;
+				span.u-btn-year, span.u-btn-month{
+					display: inline-block;
+					height: 100%;
+					width: auto;
+					cursor: pointer;
+					color: $fontColor;
+					transition: all .2s ease-in-out;
+					&:hover{
+						color: $activeColor;
+					}
+				}
+			}
+
+		}
+ 		@mixin tableBase{
+ 			width: 196px;
+			height: auto;
+			margin: 0 10px;
+			padding: 10px 0;
+			color: $fontColor;
+ 		}
+		.m-table-calendar{
+			@include tableBase;
+
+			.w-cells-header, .w-cells-body{
+				overflow: hidden;
+			}
+			.w-cells-header{
+				color: $cellDisabled;
+			}
+			.w-cells-body{
+				color: $cellActive;
+			}
+			.w-cells-cell{
+				display: block;
+				float: left;
+				width: 24px;
+				height: 24px;
+				margin: 2px;
+				line-height: 24px;
+				text-align: center;
+				cursor: pointer;
+				background: #fff;
+				border-radius: 0;
+				transition: all .2s ease-in-out; 
+				&.disabled{
+					color: $cellDisabled;
+				}
+				&:hover{
+					border-radius: 2px;
+					background-color: $hoverColor;
+				}
+				&.selected{
+					color: #fff;
+					border-radius: 2px;
+					background-color: $activeColor;
+				}
+			}
+
+			// 选择年份、月份部分
+			.w-cells-cell-month, .w-cells-cell-year {
+				display: inline-block;
+			    width: 40px;
+			    height: 28px;
+			    margin: 10px 12px;
+			    text-align: center;
+			    line-height: 28px;
+				color: $fontColor;
+				background: #fff;
+				border-radius: 0;
+				cursor: pointer;
+				transition: all .2s ease-in-out;
+				&:hover{
+					color: $activeColor;
+					border-radius: 4px;
+					background-color: $hoverColor;
+				}
+				&.selected{
+					color: #fff;
+					border-radius: 4px;
+					background-color: $activeColor;
+				}
+			}
+
+		}
+		.m-table-time{
+			width: 100%;
+			height: 216px;
+			margin: 0;
+			padding: 0;
+			&>div{
+				float: left;
+				width: 72px;
+				height: 100%;
+				overflow-y: hidden;
+				border-right: 1px solid $secondaryColor;
+				&.w-sec-scroll{
+					border: none;
+				}
+				&:hover{
+					overflow-y: scroll;
+				}
+				.u-time-cell{
+					display: block;
+					width: 100%;
+					height: 24px;
+					line-height: 24px;
+				    text-indent: 28px;
+				    cursor: pointer;
+					transition: all .2s ease-in-out;
+					&.selected{
+						color: $activeColor;
+						background-color: $secondaryColor;
+					}
+				    &:hover{
+						background-color: $secondaryColor;
+				    }
+				}
+			}
+		}
+
+		.m-table-footer{
+			position: relative;
+			margin: 0;
+			color: $fontColor;
+			padding: 6px;
+		    width: 100%;
+		    line-height: 24px;
+		    height: 36px;
+			border-top: 1px solid #eee; 
+			&>span{
+				display: inline-block;
+				cursor: pointer;
+				&.w-time-btn{
+					color: $activeColor;
+				}
+				&.w-clear-btn{
+					position: absolute;
+					right: 3.6rem;
+				}
+				&.w-done-btn{
+					position: absolute;
+					right: 6px;
+					width: 2.5rem;
+					background-color: $activeColor;
+					color: #fff;
+					border-radius: 2px;
+					height: 24px;
+					text-align: center;
+					transition: all .2s ease-in-out;
+					&:hover{
+						background-color: $btnHoverColor;
+					}
+				}
+			}
+		}
+
+		// 选择年份前后切换
+		$thick: 8px;
+		$arrDist: 4px;
+		.w-cells-ymheader{
+			position: relative;
+			.w-switch-btn{
+				display: block;
+				position: absolute;
+				width: 0;
+				height: 0;
+				border: transparent $thick solid;
+				top: 50%;
+				transform: translateY(-50%);
+				cursor: pointer;
+				transition: all .2s ease-in-out;
+				&.prev{
+					left: $arrDist;
+					border-right: $lightGrey $thick solid;
+				}
+				&.next{
+					right: $arrDist;
+					border-left: $lightGrey $thick solid;
+				}
+				&.prev:hover{
+					border-right: $activeColor $thick solid;
+				}
+				&.next:hover{
+					border-left: $activeColor $thick solid;
+				}
+			}
+		}
+
+	}
+}
+
+			
