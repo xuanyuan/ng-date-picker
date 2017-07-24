@@ -34,6 +34,7 @@ class NgDatePickerController {
 
     init() {
         this.setStaticConf();
+        this.setConf();
         this.setViewMethods();
     }
 
@@ -44,6 +45,10 @@ class NgDatePickerController {
         this.options = Scope.options;
         this.placeholder = Scope.placeholder;
         this.formatVal = '';
+    }
+
+    setConf(){
+        this.views = 'calendar';
     }
 
     setViewMethods() {

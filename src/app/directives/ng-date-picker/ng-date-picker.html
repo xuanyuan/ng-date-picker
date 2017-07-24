@@ -6,17 +6,20 @@
 		<div class="w-picker-conf">
 			<span class="config-item" ng-repeat="conf in vmDp.options" ng-click="vmDp.viewMethods.selectOption(conf)">{{conf.name}}</span>
 		</div>
-		<div class="w-picker-panel">
+		<div class="w-picker-time-panel" ng-show="vmDp.views === 'time'">
 			<div class="panel-left">
-				<ng-calendar-picker></ng-calendar-picker>	
-				<ng-time-picker value="vmDp.value.start"></ng-time-picker>
+				<ng-time-picker  value="vmDp.value.start"></ng-time-picker>
 			</div>
 			<span class="u-divide-panel"></span>
 			<div class="panel-right">
-				<ng-calendar-picker></ng-calendar-picker>	
 				<ng-time-picker value="vmDp.value.end"></ng-time-picker>
-			</div>
+			</div>	
 		</div>
+		<div class="w-picker-calendar-panel" ng-show="vmDp.views === 'calendar'">
+			<!-- 暂时只做range的考虑 -->
+			<ng-calendar-picker value="vmDp.value"></ng-calendar-picker>
+		</div>
+
 		<div class="w-picker-option">
 			
 		</div>

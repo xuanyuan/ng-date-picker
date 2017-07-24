@@ -1,12 +1,15 @@
 <div class="ng-time-container">
-    <p class="w-time-header">{{vmTp.yearNow}}年{{vmTp.monthNow + 1}}月</p>
-    <div class="w-hour-scroll">
+    <div class="w-time-header">
+        <span>{{vmTp.yearNow}}年</span>
+        <span>{{vmTp.monthNow + 1}}月</span>
+    </div>
+    <div class="w-scroll w-hour-scroll">
         <span class="u-time-cell" ng-repeat="h in vmTp.hourConf" ng-class="{'selected': vmTp.hrNow == $index}" ng-click="vmTp.viewMethods.selectTime('h', $index)">{{h}}</span>
     </div>
-    <div class="w-min-scroll">
+    <div class="w-scroll w-min-scroll">
         <span class="u-time-cell" ng-repeat="m in vmTp.minConf" ng-class="{'selected': vmTp.minNow == $index}" ng-click="vmTp.viewMethods.selectTime('m', $index)">{{m}}</span>
     </div>
-    <div class="w-sec-scroll">
+    <div class="w-scroll w-sec-scroll">
         <span class="u-time-cell" ng-repeat="s in vmTp.secConf" ng-class="{'selected': vmTp.secNow == $index}" ng-click="vmTp.viewMethods.selectTime('s', $index)">{{s}}</span>
     </div>
 </div>

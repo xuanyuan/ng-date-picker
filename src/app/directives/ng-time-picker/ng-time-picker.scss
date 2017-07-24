@@ -6,7 +6,7 @@ ng-time-picker {
         height: $panelHeight + $headerHeight;
         margin: 0;
         padding: 0;
-        &>p.w-time-header {
+        & > .w-time-header {
             display: block;
             width: 100%;
             height: $headerHeight;
@@ -15,7 +15,7 @@ ng-time-picker {
             text-align: center;
             line-height: $headerHeight;
         }
-        &>div {
+        & > .w-scroll {
             float: left;
             width: 72px;
             height: $panelHeight;

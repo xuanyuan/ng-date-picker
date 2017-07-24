@@ -41,7 +41,7 @@ class NgTimePickerController {
     }
 
     setWatchers() {
-        this.Scope.$watch('value', v => {
+        this.Scope.$watch('value', () => {
             this.setViewDisplay();
         });
     }
