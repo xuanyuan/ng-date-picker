@@ -21,7 +21,10 @@
 		</div>
 
 		<div class="w-picker-option">
-			
+			<span class="btn-opt-view" ng-show="vmDp.views === 'calendar'" ng-click="vmDp.viewMethods.selectView('time')">选择时间</span>
+			<span class="btn-opt-view" ng-show="vmDp.views === 'time'" ng-click="vmDp.viewMethods.selectView('calendar')">选择日期</span>
+			<span class="btn-opt-clear" ng-click="vmDp.viewMethods.clearValue()">清空</span>
+			<span class="btn-opt-done" ng-click="vmDp.viewMethods.doneValue()">确定</span>
 		</div>
 	</div>
 </div>

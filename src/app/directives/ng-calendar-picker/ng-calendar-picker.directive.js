@@ -30,11 +30,12 @@ class NgCalendarPickerController {
         this.setStaticConf();
         this.setConf();
         this.setViewMethods();
+        this.setWatchers();
     }
 
     setStaticConf() {
         this.panel = {
-            left: 'year',
+            left: 'date',
             right: 'year'
         }
         this.weekConf = ['日', '一', '二', '三', '四', '五', '六'];
@@ -62,6 +63,12 @@ class NgCalendarPickerController {
             month: end.month(),
             date: end.date()
         };
+    }
+
+    setWatchers(){
+        this.Scope.$watch('value', () => {
+            this.setConf();
+        }, true);
     }
 
     setViewMethods() {
@@ -104,5 +111,20 @@ class NgCalendarPickerController {
             serialAry.push(i);
         }
         return serialAry;
+    }
+
+    _getRangeDates(now){
+        let cells = [];
+        let gridNum = 42;
+        let monthStart = now.startOf('month');
+        let monthEnd = now.endOf('month');
+        let firstDay = monthStart.day();
+        for(let i = 0; i < gridNum; i++){
+            let date = {};
+            if(d <= 6 && d < firstDay){
+                
+            }
+        }
+
     }
 }

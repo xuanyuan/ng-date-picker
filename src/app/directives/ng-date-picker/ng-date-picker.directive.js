@@ -56,8 +56,18 @@ class NgDatePickerController {
         this.viewMethods = {
             selectOption(conf) {
                 const { start, end } = conf;
-                vmDp.Scope.value.start = start;
-                vmDp.Scope.value.end = end;
+                vmDp.value = vmDp.Scope.value = {
+                    start, end
+                };
+            },
+            selectView(which){
+                vmDp.views = which;
+            },
+            clearValue(){
+
+            },
+            doneValue(){
+
             }
         }
     }
