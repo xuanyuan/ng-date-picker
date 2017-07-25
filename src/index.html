@@ -43,7 +43,6 @@
 
     <ng-date-picker 
 	    style="width: 280px;" 
-    	type="{{rctrl.dateConf.type}}" 
     	value="rctrl.dateConf.value" 
     	format="{{rctrl.dateConf.format}}"
     	placeholder="{{rctrl.dateConf.placeholder}}"
@@ -77,8 +76,10 @@
     this.dateConf = {
       type: 'datetimerange',
       value: {
-        start: moment(),
-        end: moment().month(11).add(11, 'y').add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')
+        // start: moment(),
+        // end: moment().month(11).add(11, 'y').add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')
+        start: '',
+        end: ''
       },
       format: 'YYYY-MM-DD HH:mm:ss',
       placeholder: '请选择日期范围',

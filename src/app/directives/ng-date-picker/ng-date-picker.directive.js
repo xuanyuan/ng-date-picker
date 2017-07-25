@@ -4,7 +4,6 @@ export function NgDatePicker() {
     let directive = {
         restrict: 'E',
         scope: {
-            type: '@',
             value: '=',
             format: '@',
             placeholder: '@',
@@ -60,13 +59,26 @@ class NgDatePickerController {
     }
 
     setWatchers(){
+        const moment = this.Moment;
         this.Scope.$watch('value',v => {
+            if(v.start == '' && v.end != ''){
+                v.start = moment(v.end).hour(0).minute(0).second(0);
+            }
+            if(v.start != '' && v.end == ''){
+                v.end = moment(v.start).hour(0).minute(0).second(0);
+            }
             this.setFormatVal(v.start, v.end, this.format);
         }, true);
     }
 
     setFormatVal(start, end, format){
-        this.formatVal = `${start.format(format)} - ${end.format(format)}`;
+        let formatStr = '';
+        if(start == '' || end == ''){
+            formatStr = '';
+        } else {
+            formatStr = `${start.format(format)} - ${end.format(format)}`;          
+        }
+        this.formatVal = formatStr;
     }
 
     setViewMethods() {
@@ -86,10 +98,13 @@ class NgDatePickerController {
                 vmDp.views = which;
             },
             clearValue(){
-
+                vmDp.Scope.value = vmDp.value = {
+                    start: '',
+                    end: ''
+                };
             },
             doneValue(){
-
+                this.togglePicker(false);
             }
         }
     }

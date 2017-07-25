@@ -48,19 +48,23 @@ class NgTimePickerController {
 
     setViewDisplay() {
         const value = this.Scope.value;
-        this.yearNow = value.year();
-        this.monthNow = value.month();
-        this.hrNow = value.hours();
-        this.minNow = value.minutes();
-        this.secNow = value.seconds();
+        const moment = this.Moment;
+        const m = moment();
+        this.yearNow = value ? value.year() : m.year();
+        this.monthNow = value ? value.month() : m.month();
+        this.hrNow = value ? value.hours() : '';
+        this.minNow = value ? value.minutes() : '';
+        this.secNow = value ? value.seconds() : '';
     }
 
     setViewMethods() {
         const vmTp = this;
+        const moment = this.Moment;
         this.viewMethods = {
             selectTime(which, index) {
                 let date;
                 let value = vmTp.Scope.value;
+                if(value == '') value = moment().hour(0).minute(0).second(0);
                 switch (which) {
                     case 'h':
                         date = value.hour(index);
