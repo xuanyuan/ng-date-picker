@@ -40,20 +40,17 @@
   <div ng-controller="RangeController as rctrl">
     <!-- <h1>日期时间组件（ng1.x）</h1> -->
     <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
-    <!-- <ng-datetime-picker 
-			class="m-parent-box" 
-			style="width: 280px;" 
-			range="rctrl.range"
-			config="rctrl.rangeConf"
-			placeholder="请选择日期范围"
-			format="YY-MM-DD HH:mm:ss"></ng-datetime-picker> -->
+
     <ng-date-picker 
-	    style="width: 240px;" 
+	    style="width: 280px;" 
     	type="{{rctrl.dateConf.type}}" 
     	value="rctrl.dateConf.value" 
     	format="{{rctrl.dateConf.format}}"
     	placeholder="{{rctrl.dateConf.placeholder}}"
     	options="rctrl.dateConf.options"></ng-date-picker>
+
+    <span>TEST INLINE------------------------------TEST INLINE</span>
+    <p>TEST BLOCK-------------------TEST BLOCK</p>
   </div>
   <script>
   angular.module('demo', ['ngDatetimeRangePicker'])
@@ -92,7 +89,7 @@
         },
         {
           name: '昨天',
-          start: moment().subtract(1, 'd'),
+          start: moment(),
           end: moment().subtract(1, 'd')
         },
         {
@@ -107,28 +104,6 @@
         }
       ]
     };
-
-    this.rangeConf = [{
-        name: '今天',
-        start: moment().startOf('day'),
-        end: moment().endOf('day')
-      },
-      {
-        name: '昨天',
-        start: moment().subtract(1, 'd'),
-        end: moment().subtract(1, 'd')
-      },
-      {
-        name: '当前月',
-        start: moment().startOf('month'),
-        end: moment()
-      },
-      {
-        name: '一年又两个月',
-        start: moment().subtract(1, 'M'),
-        end: moment().add(1, 'y').add(1, 'M')
-      }
-    ];
   }
 
   </script>

@@ -1,8 +1,8 @@
 <div class="ng-date-picker-container">
 	<div class="m-picker-input">
-		<input class="w-picker-input" type="text" name="ng-picker-input" ng-model="vmDp.formatVal" placeholder="{{vmDp.placeholder}}" />
+		<input class="w-picker-input" type="text" name="ng-picker-input" ng-model="vmDp.formatVal" placeholder="{{vmDp.placeholder}}" ng-click="vmDp.viewMethods.togglePicker(true)"/>
 	</div>
-	<div class="m-picker-dropdown">
+	<div class="m-picker-dropdown" ng-class="{'transition-show': vmDp.isOpened}">
 		<div class="w-picker-conf">
 			<span class="config-item" ng-repeat="conf in vmDp.options" ng-click="vmDp.viewMethods.selectOption(conf)">{{conf.name}}</span>
 		</div>
@@ -28,3 +28,5 @@
 		</div>
 	</div>
 </div>
+
+<div class="m-picker-mask" ng-show="vmDp.isOpened" ng-click="vmDp.viewMethods.togglePicker(false)"></div>

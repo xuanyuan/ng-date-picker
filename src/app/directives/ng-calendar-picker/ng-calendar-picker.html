@@ -19,7 +19,14 @@
 			</div>
 		</div>
 		<!-- 选择日 -->
-		<div ng-show="vmCp.panel.left === 'date'" class="panel panel-choose-date"></div>
+		<div ng-show="vmCp.panel.left === 'date'" class="panel panel-choose-date">
+			<div class="u-cell-date-header">
+				<span ng-repeat="conf in vmCp.weekConf">{{conf}}</span>
+			</div>
+			<div class="u-cell-date" ng-repeat="conf in vmCp.dateConf.left" ng-class="{'disabled': !conf.at, 'selected': conf.selected, 'forbidden': conf.forbidden, 'range': conf.inRange}">
+				<span ng-click="vmCp.viewMethods.selectDate('start', conf)">{{conf.n}}</span>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -44,6 +51,13 @@
 			</div>
 		</div>
 		<!-- 选择日 -->
-		<div ng-show="vmCp.panel.right === 'date'" class="panel panel-choose-date"></div>
+		<div ng-show="vmCp.panel.right === 'date'" class="panel panel-choose-date">
+			<div class="u-cell-date-header">
+				<span ng-repeat="conf in vmCp.weekConf">{{conf}}</span>
+			</div>
+			<div class="u-cell-date" ng-repeat="conf in vmCp.dateConf.right" ng-class="{'disabled': !conf.at, 'selected': conf.selected, 'forbidden': conf.forbidden, 'range': conf.inRange}">
+				<span ng-click="vmCp.viewMethods.selectDate('end', conf)">{{conf.n}}</span>
+			</div>
+		</div>
 	</div>
 </div>

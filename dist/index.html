@@ -1,0 +1,79 @@
+<!doctype html><html ng-app="demo" ng-strict-di=""><head><meta charset="utf-8"><title>Angular Date Range Picker</title><meta name="description" content="angular, directive, daypicker, date, day, daterange, date range picker, pure angular, day-picker, range-select, calendar, picker, date-range-picker, moment"><meta name="viewport" content="width=device-width"><link rel="stylesheet" href="styles/ob-daterangepicker.css"></head><body><!--[if lt IE 9]>
+ <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+ <![endif]--><script src="scripts/vendor.js"></script><script src="scripts/ob-daterangepicker.js"></script><div ng-controller="RangeController as rctrl"><h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2><ng-date-picker style="width: 240px;" type="{{rctrl.dateConf.type}}" value="rctrl.dateConf.value" format="{{rctrl.dateConf.format}}" placeholder="{{rctrl.dateConf.placeholder}}" options="rctrl.dateConf.options"></ng-date-picker></div><script>
+  angular.module('demo', ['ngDatetimeRangePicker'])
+    .controller('RangeController', RangeCtrl);
+
+  function getMonthDateRange(year, month) {
+    let startDate = moment([year, month - 1]);
+    let endDate = moment(startDate).endOf('month');
+    return { start: startDate, end: endDate, startWeek: startDate.day(), startDate: startDate.date() };
+  }
+  for (var i = 1; i <= 12; i++) {
+    // console.log(getMonthDateRange(2017, i));
+  }
+
+  function RangeCtrl() {
+    var vm = this;
+
+    this.range = {
+      start: Date.now(),
+      // end: moment().month(11).add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')
+      end: null
+    };
+
+    this.dateConf = {
+      type: 'datetimerange',
+      value: {
+        start: moment(),
+        end: moment().month(11).add(11, 'y').add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')
+      },
+      format: 'YYYY-MM-DD HH:mm:ss',
+      placeholder: '请选择日期范围',
+      options: [{
+          name: '今天',
+          start: moment().startOf('day'),
+          end: moment().endOf('day')
+        },
+        {
+          name: '昨天',
+          start: moment().subtract(1, 'd'),
+          end: moment().subtract(1, 'd')
+        },
+        {
+          name: '当前月',
+          start: moment().startOf('month'),
+          end: moment()
+        },
+        {
+          name: '一年又两个月',
+          start: moment().subtract(1, 'M'),
+          end: moment().add(1, 'y').add(1, 'M')
+        }
+      ]
+    };
+
+    this.rangeConf = [{
+        name: '今天',
+        start: moment().startOf('day'),
+        end: moment().endOf('day')
+      },
+      {
+        name: '昨天',
+        start: moment().subtract(1, 'd'),
+        end: moment().subtract(1, 'd')
+      },
+      {
+        name: '当前月',
+        start: moment().startOf('month'),
+        end: moment()
+      },
+      {
+        name: '一年又两个月',
+        start: moment().subtract(1, 'M'),
+        end: moment().add(1, 'y').add(1, 'M')
+      }
+    ];
+  }
+
+  </script></body></html>
