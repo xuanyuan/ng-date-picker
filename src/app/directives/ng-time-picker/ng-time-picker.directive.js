@@ -27,6 +27,13 @@ class NgTimePickerController {
     }
 
     init() {
+        const cls = ['.w-hour-scroll', '.w-min-scroll', '.w-sec-scroll'];
+        const element = this.Element[0];
+        this.scrollDom = [
+            element.querySelector(cls[0]),
+            element.querySelector(cls[1]),
+            element.querySelector(cls[2])
+        ];
         this.setStaticConf();
         this.setViewDisplay();
         this.setViewMethods();
@@ -55,6 +62,9 @@ class NgTimePickerController {
         this.hrNow = value ? value.hours() : '';
         this.minNow = value ? value.minutes() : '';
         this.secNow = value ? value.seconds() : '';
+        // this._scrollToPos('h', this.hrNow);
+        // this._scrollToPos('m', this.minNow);
+        // this._scrollToPos('s', this.secNow);
     }
 
     setViewMethods() {
@@ -64,7 +74,7 @@ class NgTimePickerController {
             selectTime(which, index) {
                 let date;
                 let value = vmTp.Scope.value;
-                if(value == '') value = moment().hour(0).minute(0).second(0);
+                if (value == '') value = moment().hour(0).minute(0).second(0);
                 switch (which) {
                     case 'h':
                         date = value.hour(index);
@@ -94,5 +104,23 @@ class NgTimePickerController {
             }
         }
         return serialSet;
+    }
+
+    // 时分秒滚动到指定位置
+    _scrollToPos(target, time) {
+        const height = 24;
+        const index = parseInt(time);
+
+        switch (target) {
+            case 'h':
+                this.scrollDom[0].scrollTop = height * index;
+                break;
+            case 'm':
+                this.scrollDom[1].scrollTop = height * index;
+                break;
+            case 's':
+                this.scrollDom[2].scrollTop = height * index;
+                break;
+        }
     }
 }

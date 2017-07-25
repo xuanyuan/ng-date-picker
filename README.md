@@ -8,7 +8,7 @@ Installation
 -------------
 
 npm:  
-`npm install --save ng-datetime-picker`
+`npm install --save ngDatetimeRangePicker`
 
 ----------
 

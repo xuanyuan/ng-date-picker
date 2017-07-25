@@ -115,15 +115,15 @@ ng-date-picker {
             .panel-right {
                 float: right;
             }
-            .u-divide-panel {
-                position: absolute;
-                left: $panelWidth;
-                bottom: 0;
-                display: block;
-                width: $middleDivideWidth;
-                height: $panelHeight;
-                background-color: $dividegrey;
-            }
+            // .u-divide-panel {
+            //     position: absolute;
+            //     left: $panelWidth;
+            //     bottom: 0;
+            //     display: block;
+            //     width: $middleDivideWidth;
+            //     height: $panelHeight;
+            //     background-color: $dividegrey;
+            // }
         }
         .w-picker-calendar-panel {
             position: absolute;
