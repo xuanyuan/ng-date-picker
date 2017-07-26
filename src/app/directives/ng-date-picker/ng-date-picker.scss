@@ -73,6 +73,12 @@ ng-date-picker {
          :before {
             box-sizing: border-box;
         }
+        &.no-options{
+            width: $panelWidth * 2 + $middleDivideWidth;
+            .w-picker-conf{
+                display: none;
+            }
+        }
         .w-picker-conf {
             position: absolute;
             left: 0;
