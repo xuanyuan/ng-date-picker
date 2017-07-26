@@ -40,10 +40,10 @@ class NgDatePickerController {
 
     setStaticConf() {
         const Scope = this.Scope;
-        this.format = Scope.format;
+        this.format = Scope.format || 'YYYY-MM-DD HH:mm:ss';
         this.value = Scope.value;
         this.options = Scope.options;
-        this.placeholder = Scope.placeholder;
+        this.placeholder = Scope.placeholder || '请选择日期时间范围';
         this.formatVal = '';
         this.isOpened = false;
     }
