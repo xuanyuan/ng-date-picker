@@ -13,7 +13,7 @@ export function NgDatePicker() {
             onOk: '&',
             onClear: '&',
             onChange: '&',
-            isGlobal: '@'
+            isGlobal: '='
         },
         controller: NgDatePickerController,
         controllerAs: 'vmDp',
@@ -47,9 +47,9 @@ class NgDatePickerController {
 
     // 设置动态全局插入Panel
     setDynamicPanel() {
-        const isGlobal = Boolean(this.Scope.isGlobal);
+        const isGlobal = this.Scope.isGlobal;
         const pos = this.Scope.pos;
-        if (isGlobal) {
+        if (isGlobal === true) {
             const el = this.Element;
             const docEl = this.Document.find('body');
             const dropdown = this.Document[0].getElementById('ng-picker-to-clone');

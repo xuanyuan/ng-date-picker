@@ -21,9 +21,10 @@
 
     <style type="text/css">
         #test-picker{
-            position: absolute;
+         /*   position: absolute;
             left: 50%;
-            top:20%;
+            top:20%;*/
+            margin: 100px 400px;
         }
     </style>
 </head>
@@ -58,21 +59,12 @@
           on-ok="rctrl.okFunc()"
           on-clear="rctrl.clearFunc()"
           on-change="rctrl.changeFunc()"
-          is-global="{{rctrl.dateConf.isGlobal}}"
-          pos="cover"></ng-date-picker>
+          is-global="rctrl.dateConf.isGlobal"
+          pos="center"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])
         .controller('RangeController', RangeCtrl);
-
-    function getMonthDateRange(year, month) {
-        let startDate = moment([year, month - 1]);
-        let endDate = moment(startDate).endOf('month');
-        return { start: startDate, end: endDate, startWeek: startDate.day(), startDate: startDate.date() };
-    }
-    for (var i = 1; i <= 12; i++) {
-        // console.log(getMonthDateRange(2017, i));
-    }
 
     function RangeCtrl() {
         var vm = this;
