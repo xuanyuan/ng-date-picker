@@ -1,5 +1,5 @@
 {
-  "name": "ngDatetimeRangePicker",
+  "name": "ng-datetimerange-picker",
   "version": "1.0.0",
   "main": [
     "dist/scripts/ngDatetimeRangePicker.js",

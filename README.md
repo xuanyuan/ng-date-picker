@@ -1,4 +1,4 @@
-**Angularjs Datetime Range Pickers**
+**ng-datetimerange-picker**
 ===================
 一个全新的简洁美观的日期时间范围选择器（样式参考iviewui）
 
