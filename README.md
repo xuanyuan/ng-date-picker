@@ -18,8 +18,8 @@ Usage
 
 a. 引入文件
 ```
-  <link rel="stylesheet" href="bower_components/ngDatetimeRangePicker/dist/styles/ngDatetimeRangePicker.css">
-  <script src="bower_components/ngDatetimeRangePicker/dist/scripts/ngDatetimeRangePicker.js"></script>
+  <link rel="stylesheet" href="../node_modules/ng-datetimerange-picker/dist/styles/ngDatetimeRangePicker.css">
+  <script src="../node_modules/ng-datetimerange-picker/dist/scripts/ngDatetimeRangePicker.js"></script>
 ```
 
 b. 在模块中进行依赖  
