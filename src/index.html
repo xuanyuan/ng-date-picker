@@ -55,10 +55,11 @@
           format="{{rctrl.dateConf.format}}" 
           placeholder="{{rctrl.dateConf.placeholder}}" 
           options="rctrl.dateConf.options"
-          is-global="{{rctrl.dateConf.isGlobal}}"
           on-ok="rctrl.okFunc()"
           on-clear="rctrl.clearFunc()"
-          on-change="rctrl.changeFunc()"></ng-date-picker>
+          on-change="rctrl.changeFunc()"
+          is-global="{{rctrl.dateConf.isGlobal}}"
+          pos="cover"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])

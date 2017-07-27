@@ -554,12 +554,17 @@
 	            placeholder: '@',
 	            options: '=',
 	            clearable: '=',
-	            readonly: '='
+	            readonly: '=',
+	            onOk: '&',
+	            onClear: '&',
+	            onChange: '&',
+	            isGlobal: '@'
 	        },
 	        controller: NgDatePickerController,
 	        controllerAs: 'vmDp',
 	        templateUrl: 'app/directives/ng-date-picker/ng-date-picker.html',
 	        link: function link(scope, elem, attrs, ctrl) {
+	            scope.pos = attrs.pos;
 	            ctrl.init();
 	        }
 	    };
@@ -568,12 +573,13 @@
 	}
 
 	var NgDatePickerController = (function () {
-	    NgDatePickerController.$inject = ["$element", "$scope", "$filter", "moment"];
-	    function NgDatePickerController($element, $scope, $filter, moment) {
+	    NgDatePickerController.$inject = ["$document", "$element", "$scope", "$filter", "moment"];
+	    function NgDatePickerController($document, $element, $scope, $filter, moment) {
 	        'ngInject';
 
 	        _classCallCheck(this, NgDatePickerController);
 
+	        this.Document = $document;
 	        this.Element = $element;
 	        this.Scope = $scope;
 	        this.Filter = $filter;
@@ -587,6 +593,44 @@
 	            this.setConf();
 	            this.setViewMethods();
 	            this.setWatchers();
+	            this.setDynamicPanel();
+	        }
+
+	        // 设置动态全局插入Panel
+	    }, {
+	        key: 'setDynamicPanel',
+	        value: function setDynamicPanel() {
+	            var isGlobal = Boolean(this.Scope.isGlobal);
+	            var pos = this.Scope.pos;
+	            if (isGlobal) {
+	                var el = this.Element;
+	                var docEl = this.Document.find('body');
+	                var dropdown = this.Document[0].getElementById('ng-picker-to-clone');
+	                docEl.append(dropdown);
+	                // 先硬编码吧
+	                var baseLeft = el.prop('offsetLeft');
+	                var baseTop = el.prop('offsetTop');
+	                var inputWidth = parseInt(el.css('width'));
+	                var inputHeight = 30;
+	                var panelWidth = 530;
+
+	                dropdown.style.top = baseTop + inputHeight + 'px';
+	                switch (pos) {
+	                    case 'center':
+	                        dropdown.style.left = baseLeft - (panelWidth - inputWidth) / 2 + 'px';
+	                        break;
+	                    case 'right':
+	                        dropdown.style.left = baseLeft - (panelWidth - inputWidth) + 'px';
+	                        break;
+	                    case 'cover':
+	                        dropdown.style.top = baseTop + 'px';
+	                        dropdown.style.left = baseLeft + 'px';
+	                        break;
+	                    default:
+	                        dropdown.style.left = baseLeft + 'px';
+	                        break;
+	                }
+	            }
 	        }
 	    }, {
 	        key: 'setStaticConf',
@@ -625,6 +669,7 @@
 	                if (v.start != '' && v.end == '') {
 	                    v.end = moment(v.start).hour(0).minute(0).second(0);
 	                }
+	                _this.Scope.onChange();
 	                _this.setFormatVal(v.start, v.end, _this.format);
 	            }, true);
 	        }
@@ -652,20 +697,24 @@
 	                    var end = conf.end;
 
 	                    vmDp.value = vmDp.Scope.value = {
-	                        start: start, end: end
+	                        start: start,
+	                        end: end
 	                    };
 	                    vmDp.setConf();
+	                    vmDp.isOpened = false;
 	                },
 	                selectView: function selectView(which) {
 	                    vmDp.views = which;
 	                },
 	                clearValue: function clearValue() {
+	                    vmDp.Scope.onClear();
 	                    vmDp.Scope.value = vmDp.value = {
 	                        start: '',
 	                        end: ''
 	                    };
 	                },
 	                doneValue: function doneValue() {
+	                    vmDp.Scope.onOk();
 	                    this.togglePicker(false);
 	                }
 	            };
@@ -678,6 +727,6 @@
 /***/ })
 /******/ ]);
 angular.module("ngDatetimeRangePicker").run(["$templateCache", function($templateCache) {$templateCache.put("app/directives/ng-calendar-picker/ng-calendar-picker.html","<div class=\"ng-calendar-container\"><div class=\"w-calendar-header\"><span class=\"btn-prev-year\" ng-show=\"vmCp.panel.left === \'year\'\" ng-click=\"vmCp.viewMethods.rangeYear(\'left\', \'prev\')\">◤</span> <span class=\"u-btn-year\" ng-click=\"vmCp.viewMethods.selectPanel(\'left\', \'year\')\">{{vmCp.start.year}}年</span> <span class=\"u-btn-month\" ng-click=\"vmCp.viewMethods.selectPanel(\'left\', \'month\')\">{{vmCp.start.month + 1}}月</span> <span class=\"btn-next-year\" ng-show=\"vmCp.panel.left === \'year\'\" ng-click=\"vmCp.viewMethods.rangeYear(\'left\', \'next\')\">◥</span></div><div class=\"w-calendar-body\"><div ng-show=\"vmCp.panel.left === \'year\'\" class=\"panel panel-choose-year\"><div class=\"u-cell-year\" ng-repeat=\"conf in vmCp.nsYearConf\" ng-class=\"{\'selected\': !vmCp.start.disabled && vmCp.start.year === conf}\"><span ng-click=\"vmCp.viewMethods.selectYear(\'start\', conf)\">{{conf}}</span></div></div><div ng-show=\"vmCp.panel.left === \'month\'\" class=\"panel panel-choose-month\"><div class=\"u-cell-month\" ng-repeat=\"conf in vmCp.monthConf\" ng-class=\"{\'selected\': !vmCp.start.disabled && vmCp.start.month === $index}\"><span ng-click=\"vmCp.viewMethods.selectMonth(\'start\', $index)\">{{conf}}</span></div></div><div ng-show=\"vmCp.panel.left === \'date\'\" class=\"panel panel-choose-date\"><div class=\"u-cell-date-header\"><span ng-repeat=\"conf in vmCp.weekConf\">{{conf}}</span></div><div class=\"u-cell-date\" ng-repeat=\"conf in vmCp.dateConf.left\" ng-class=\"{\'disabled\': !conf.at, \'selected\': conf.selected, \'forbidden\': conf.forbidden, \'range\': conf.inRange}\"><span ng-click=\"vmCp.viewMethods.selectDate(\'start\', conf)\">{{conf.n}}</span></div></div></div></div><div class=\"ng-calendar-container\"><div class=\"w-calendar-header\"><span class=\"btn-prev-year\" ng-show=\"vmCp.panel.right === \'year\'\" ng-click=\"vmCp.viewMethods.rangeYear(\'right\', \'prev\')\">◤</span> <span class=\"u-btn-year\" ng-click=\"vmCp.viewMethods.selectPanel(\'right\', \'year\')\">{{vmCp.end.year}}年</span> <span class=\"u-btn-month\" ng-click=\"vmCp.viewMethods.selectPanel(\'right\', \'month\')\">{{vmCp.end.month + 1}}月</span> <span class=\"btn-next-year\" ng-show=\"vmCp.panel.right === \'year\'\" ng-click=\"vmCp.viewMethods.rangeYear(\'right\', \'next\')\">◥</span></div><div class=\"w-calendar-body\"><div ng-show=\"vmCp.panel.right === \'year\'\" class=\"panel panel-choose-year\"><div class=\"u-cell-year\" ng-repeat=\"conf in vmCp.neYearConf\" ng-class=\"{\'selected\': !vmCp.end.disabled && vmCp.end.year === conf}\"><span ng-click=\"vmCp.viewMethods.selectYear(\'end\', conf)\">{{conf}}</span></div></div><div ng-show=\"vmCp.panel.right === \'month\'\" class=\"panel panel-choose-month\"><div class=\"u-cell-month\" ng-repeat=\"conf in vmCp.monthConf\" ng-class=\"{\'selected\': !vmCp.end.disabled && vmCp.end.month === $index}\"><span ng-click=\"vmCp.viewMethods.selectMonth(\'end\', $index)\">{{conf}}</span></div></div><div ng-show=\"vmCp.panel.right === \'date\'\" class=\"panel panel-choose-date\"><div class=\"u-cell-date-header\"><span ng-repeat=\"conf in vmCp.weekConf\">{{conf}}</span></div><div class=\"u-cell-date\" ng-repeat=\"conf in vmCp.dateConf.right\" ng-class=\"{\'disabled\': !conf.at, \'selected\': conf.selected, \'forbidden\': conf.forbidden, \'range\': conf.inRange}\"><span ng-click=\"vmCp.viewMethods.selectDate(\'end\', conf)\">{{conf.n}}</span></div></div></div></div>");
-$templateCache.put("app/directives/ng-date-picker/ng-date-picker.html","<div class=\"ng-date-picker-container\"><div class=\"m-picker-input\"><input class=\"w-picker-input\" type=\"text\" name=\"ng-picker-input\" ng-model=\"vmDp.formatVal\" placeholder=\"{{vmDp.placeholder}}\" ng-click=\"vmDp.viewMethods.togglePicker(true)\"></div><div class=\"m-picker-dropdown\" ng-class=\"{\'transition-show\': vmDp.isOpened, \'no-options\': !vmDp.options}\"><div class=\"w-picker-conf\"><span class=\"config-item\" ng-repeat=\"conf in vmDp.options\" ng-click=\"vmDp.viewMethods.selectOption(conf)\">{{conf.name}}</span></div><div class=\"w-picker-time-panel\" ng-show=\"vmDp.views === \'time\'\"><div class=\"panel-left\"><ng-time-picker value=\"vmDp.value.start\"></ng-time-picker></div><span class=\"u-divide-panel\"></span><div class=\"panel-right\"><ng-time-picker value=\"vmDp.value.end\"></ng-time-picker></div></div><div class=\"w-picker-calendar-panel\" ng-show=\"vmDp.views === \'calendar\'\"><ng-calendar-picker value=\"vmDp.value\"></ng-calendar-picker></div><div class=\"w-picker-option\"><span class=\"btn-opt-view\" ng-show=\"vmDp.views === \'calendar\'\" ng-click=\"vmDp.viewMethods.selectView(\'time\')\">选择时间</span> <span class=\"btn-opt-view\" ng-show=\"vmDp.views === \'time\'\" ng-click=\"vmDp.viewMethods.selectView(\'calendar\')\">选择日期</span> <span class=\"btn-opt-clear\" ng-click=\"vmDp.viewMethods.clearValue()\">清空</span> <span class=\"btn-opt-done\" ng-click=\"vmDp.viewMethods.doneValue()\">确定</span></div></div></div><div class=\"m-picker-mask\" ng-show=\"vmDp.isOpened\" ng-click=\"vmDp.viewMethods.togglePicker(false)\"></div>");
+$templateCache.put("app/directives/ng-date-picker/ng-date-picker.html","<div class=\"ng-date-picker-container\"><div class=\"m-picker-input\"><input class=\"w-picker-input\" type=\"text\" name=\"ng-picker-input\" ng-model=\"vmDp.formatVal\" placeholder=\"{{vmDp.placeholder}}\" ng-click=\"vmDp.viewMethods.togglePicker(true)\"></div><div id=\"ng-picker-to-clone\" class=\"m-picker-dropdown\" ng-class=\"{\'transition-show\': vmDp.isOpened, \'no-options\': !vmDp.options}\"><div class=\"w-picker-conf\"><span class=\"config-item\" ng-repeat=\"conf in vmDp.options\" ng-click=\"vmDp.viewMethods.selectOption(conf)\">{{conf.name}}</span></div><div class=\"w-picker-time-panel\" ng-show=\"vmDp.views === \'time\'\"><div class=\"panel-left\"><ng-time-picker value=\"vmDp.value.start\"></ng-time-picker></div><span class=\"u-divide-panel\"></span><div class=\"panel-right\"><ng-time-picker value=\"vmDp.value.end\"></ng-time-picker></div></div><div class=\"w-picker-calendar-panel\" ng-show=\"vmDp.views === \'calendar\'\"><ng-calendar-picker value=\"vmDp.value\"></ng-calendar-picker></div><div class=\"w-picker-option\"><span class=\"btn-opt-view\" ng-show=\"vmDp.views === \'calendar\'\" ng-click=\"vmDp.viewMethods.selectView(\'time\')\">选择时间</span> <span class=\"btn-opt-view\" ng-show=\"vmDp.views === \'time\'\" ng-click=\"vmDp.viewMethods.selectView(\'calendar\')\">选择日期</span> <span class=\"btn-opt-clear\" ng-click=\"vmDp.viewMethods.clearValue()\">清空</span> <span class=\"btn-opt-done\" ng-click=\"vmDp.viewMethods.doneValue()\">确定</span></div></div></div><div class=\"m-picker-mask\" ng-show=\"vmDp.isOpened\" ng-click=\"vmDp.viewMethods.togglePicker(false)\"></div>");
 $templateCache.put("app/directives/ng-time-picker/ng-time-picker.html","<div class=\"ng-time-container\"><div class=\"w-time-header\"><span>{{vmTp.yearNow}}年</span> <span>{{vmTp.monthNow + 1}}月</span></div><div class=\"w-scroll w-hour-scroll\"><span class=\"u-time-cell\" ng-repeat=\"h in vmTp.hourConf\" ng-class=\"{\'selected\': vmTp.hrNow == $index}\" ng-click=\"vmTp.viewMethods.selectTime(\'h\', $index)\">{{h}}</span></div><div class=\"w-scroll w-min-scroll\"><span class=\"u-time-cell\" ng-repeat=\"m in vmTp.minConf\" ng-class=\"{\'selected\': vmTp.minNow == $index}\" ng-click=\"vmTp.viewMethods.selectTime(\'m\', $index)\">{{m}}</span></div><div class=\"w-scroll w-sec-scroll\"><span class=\"u-time-cell\" ng-repeat=\"s in vmTp.secConf\" ng-class=\"{\'selected\': vmTp.secNow == $index}\" ng-click=\"vmTp.viewMethods.selectTime(\'s\', $index)\">{{s}}</span></div></div>");}]);
 //# sourceMappingURL=../maps/scripts/ngDatetimeRangePicker.js.map

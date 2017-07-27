@@ -1,9 +1,9 @@
 {
-  "name": "ob-daterangepicker",
-  "version": "0.12.1",
+  "name": "ngDatetimeRangePicker",
+  "version": "1.0.0",
   "main": [
-    "dist/scripts/ob-daterangepicker.js",
-    "dist/styles/ob-daterangepicker.css"
+    "dist/scripts/ngDatetimeRangePicker.js",
+    "dist/styles/ngDatetimeRangePicker.css"
   ],
   "dependencies": {
     "moment": "~2.10.6",

@@ -1,12 +1,13 @@
 {
-  "name": "ob-daterangepicker",
-  "version": "0.12.1",
+  "name": "ngDatetimeRangePicker",
+  "version": "1.0.0",
   "dependencies": {
     "moment": "~2.10.6",
     "angular": "~1.4.2"
   },
   "scripts": {
-    "test": "gulp test"
+    "serve": "gulp serve",
+    "bundle": "gulp"
   },
   "devDependencies": {
     "babel-core": "~5.8.25",
@@ -65,8 +66,9 @@
     "date",
     "picker",
     "date-range",
+    "time-range",
     "day",
     "calendar"
   ],
-  "main": "dist/scripts/ob-daterangepicker.js"
+  "main": "dist/scripts/ngDatetimeRangePicker.js"
 }

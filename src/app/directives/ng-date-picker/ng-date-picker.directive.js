@@ -13,13 +13,13 @@ export function NgDatePicker() {
             onOk: '&',
             onClear: '&',
             onChange: '&',
-            isGlobal: '@',
-            pos: '@'
+            isGlobal: '@'
         },
         controller: NgDatePickerController,
         controllerAs: 'vmDp',
         templateUrl: 'app/directives/ng-date-picker/ng-date-picker.html',
         link: (scope, elem, attrs, ctrl) => {
+            scope.pos = attrs.pos;
             ctrl.init();
         }
     };
@@ -48,6 +48,7 @@ class NgDatePickerController {
     // 设置动态全局插入Panel
     setDynamicPanel() {
         const isGlobal = Boolean(this.Scope.isGlobal);
+        const pos = this.Scope.pos;
         if (isGlobal) {
             const el = this.Element;
             const docEl = this.Document.find('body');
@@ -55,13 +56,24 @@ class NgDatePickerController {
             docEl.append(dropdown);
             // 先硬编码吧
             const [baseLeft, baseTop] = [el.prop('offsetLeft'), el.prop('offsetTop')];
-            const [inputWidth, inputHeight, panelWidth, panelHeight] = [parseInt(el.css('width')), 30, 530, 320];
+            const [inputWidth, inputHeight, panelWidth] = [parseInt(el.css('width')), 30, 530];
 
-            // addClass(dropdown, 'transform-origin-right');
             dropdown.style.top = `${baseTop + inputHeight}px`;
-            dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
-
-            console.log(dropdown.style, [baseLeft, baseTop], [inputWidth, inputHeight, panelWidth, panelHeight])
+            switch(pos){
+                case 'center':
+                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
+                    break;
+                case 'right':
+                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
+                    break;
+                case 'cover':
+                    dropdown.style.top = `${baseTop}px`;
+                    dropdown.style.left = `${baseLeft}px`;
+                    break;
+                default:
+                    dropdown.style.left = `${baseLeft}px`;
+                    break;
+            }
         }
     }
 

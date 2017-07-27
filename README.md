@@ -30,11 +30,17 @@ b. 在模块中进行依赖
 c. 使用指令`ng-date-picker`
 ```
   <ng-date-picker 
+          id="test-picker"
           style="width: 280px;" 
           value="rctrl.dateConf.value" 
           format="{{rctrl.dateConf.format}}" 
           placeholder="{{rctrl.dateConf.placeholder}}" 
-          options="rctrl.dateConf.options"></ng-date-picker>
+          options="rctrl.dateConf.options"
+          on-ok="rctrl.okFunc()"
+          on-clear="rctrl.clearFunc()"
+          on-change="rctrl.changeFunc()"
+          is-global="{{rctrl.dateConf.isGlobal}}"
+          pos="cover"></ng-date-picker>
 ```
 ----------
 
