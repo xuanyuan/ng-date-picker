@@ -18,6 +18,14 @@
     <!-- css files will be automatically insert here -->
     <!-- endinject -->
     <!-- endbuild -->
+
+    <style type="text/css">
+        #test-picker{
+            position: absolute;
+            left: 50%;
+            top:20%;
+        }
+    </style>
 </head>
 
 <body>
@@ -41,11 +49,16 @@
         <!-- <h1>日期时间组件（ng1.x）</h1> -->
         <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
         <ng-date-picker 
+          id="test-picker"
           style="width: 280px;" 
           value="rctrl.dateConf.value" 
           format="{{rctrl.dateConf.format}}" 
           placeholder="{{rctrl.dateConf.placeholder}}" 
-          options="rctrl.dateConf.options"></ng-date-picker>
+          options="rctrl.dateConf.options"
+          is-global="{{rctrl.dateConf.isGlobal}}"
+          on-ok="rctrl.okFunc()"
+          on-clear="rctrl.clearFunc()"
+          on-change="rctrl.changeFunc()"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])
@@ -62,8 +75,17 @@
 
     function RangeCtrl() {
         var vm = this;
-
+        this.okFunc = function(){
+            console.log('okkkkkkkkkk');
+        }
+        this.clearFunc = function(){
+            console.log('clearrrrrrr');
+        }
+        this.changeFunc = function(){
+            console.log('changeeeeee');
+        }
         this.dateConf = {
+            isGlobal: true,
             value: {
                 start: moment(),
                 end: moment().month(11).add(1, 'y').add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')

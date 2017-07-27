@@ -47,6 +47,9 @@ Configurations
 - [可选] format：格式，配置参考moment.js
 - [可选] placeholder: 占位符
 - [可选] options：可选配置项
+- [可选] on-ok：点击确定回调的钩子函数
+- [可选] on-clear：点击清空回调的钩子函数
+- [可选] on-change：当值发生变化时回调的钩子函数
 
 参考以下配置：
 

@@ -1,14 +1,14 @@
 @import '../common/base.scss';
 
 ng-date-picker {
-    -webkit-user-select:none;
-    -moz-user-select:none;
-    -ms-user-select:none;
-    user-select:none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     color: $fontColor;
     display: inline-block;
     background-color: #fff;
-    .m-picker-mask{
+    .m-picker-mask {
         position: fixed;
         width: 100%;
         height: 100%;
@@ -26,7 +26,7 @@ ng-date-picker {
             max-width: 320px;
             width: 100%;
             height: 30px;
-            padding: 0 4px;
+            padding-left: 4px;
             background-image: none;
             border: none;
             outline: none;
@@ -50,124 +50,128 @@ ng-date-picker {
             border-top: #888 5px solid;
         }
     }
-    .m-picker-dropdown {
-        position: absolute;
-        overflow: hidden;
-        width: $panelWidth * 2 + $confWidth + $middleDivideWidth;
-        height: 0;
-        border: solid 1px $lightgrey;
-        border-radius: $radius;
-        box-shadow: $shadow;
-        margin-top: 4px;
-        background: #fff;
-        opacity: 0;
-        transform-origin: center top 0px;
-        transition: all .4s ease;
-        z-index: 2;
-        font-size: 12px;
-        &.transition-show{
-            opacity: 1;
-            height: $headerHeight + $panelHeight + $optionHeight;
-        }
-        *,
-         :after,
-         :before {
-            box-sizing: border-box;
-        }
-        &.no-options{
-            width: $panelWidth * 2 + $middleDivideWidth;
-            .w-picker-conf{
-                display: none;
-            }
-        }
+}
+
+.m-picker-dropdown {
+    position: absolute;
+    overflow: hidden;
+    width: $panelWidth * 2 + $confWidth + $middleDivideWidth;
+    height: $headerHeight + $panelHeight + $optionHeight; 
+    border: solid 1px $lightgrey;
+    border-radius: $radius;
+    box-shadow: $shadow;
+    margin-top: 4px;
+    background: #fff;
+    z-index: 9999;
+    font-size: 12px;
+    opacity: 0;
+    transform: scale(0, 0);
+    transform-origin: center top 0px;
+    transition: all .3s ease;
+    &.transition-show {
+        opacity: 1;
+        transform: scale(1, 1); 
+        // height: $headerHeight + $panelHeight + $optionHeight; 
+        // width: $panelWidth * 2 + $confWidth + $middleDivideWidth;
+    }
+    *,
+     :after,
+     :before {
+        box-sizing: border-box;
+    }
+    &.no-options {
+        width: $panelWidth * 2 + $middleDivideWidth;
         .w-picker-conf {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: $confWidth;
-            height: $headerHeight + $panelHeight;
-            border-right: 1px solid $dividegrey;
-            background-color: $lightgrey;
-            overflow-y: auto;
-            .config-item {
-                display: block;
-                width: 100%;
-                text-align: center;
-                height: 30px;
-                border-radius: $radius;
-                line-height: 30px;
-                cursor: pointer;
-                transition: background .2s ease-in-out;
-                &:hover {
-                    background: $middlegrey;
-                }
-            }
+            display: none;
         }
-        .w-picker-time-panel {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: $panelWidth * 2 + $middleDivideWidth;
-            height: $headerHeight + $panelHeight;
-            .panel-left,
-            .panel-right {
-                position: relative;
-                display: block;
-                height: 100%;
-                width: 216px;
-            }
-            .panel-left {
-                float: left;
-            }
-            .panel-right {
-                float: right;
-            }
-            // .u-divide-panel {
-            //     position: absolute;
-            //     left: $panelWidth;
-            //     bottom: 0;
-            //     display: block;
-            //     width: $middleDivideWidth;
-            //     height: $panelHeight;
-            //     background-color: $dividegrey;
-            // }
-        }
-        .w-picker-calendar-panel {
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: $panelWidth * 2 + $middleDivideWidth;
-            height: $headerHeight + $panelHeight;
-        }
-        .w-picker-option {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+    }
+    .w-picker-conf {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: $confWidth;
+        height: $headerHeight + $panelHeight;
+        border-right: 1px solid $dividegrey;
+        background-color: $lightgrey;
+        overflow-y: auto;
+        .config-item {
+            display: block;
             width: 100%;
-            height: $optionHeight;
-            border-top: 1px solid $dividegrey;
-            span {
-                position: absolute;
-                top: 50%;
-                transform: translateY(-50%);
-                display: inline-block;
-                width: auto;
-                height: 24px;
-                padding: 0 8px;
-                line-height: 22px;
-                cursor: pointer;
-                &:hover{
-                    color: $active;
-                }
-                &.btn-opt-view{
-                    left: 10px;
-                }
-                &.btn-opt-clear{
-                    right: 60px;
-                }
-                &.btn-opt-done {
-                    right: 10px;
-                }
+            text-align: center;
+            height: 30px;
+            border-radius: $radius;
+            line-height: 30px;
+            cursor: pointer;
+            transition: background .2s ease-in-out;
+            &:hover {
+                background: $middlegrey;
+            }
+        }
+    }
+    .w-picker-time-panel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: $panelWidth * 2 + $middleDivideWidth;
+        height: $headerHeight + $panelHeight;
+        .panel-left,
+        .panel-right {
+            position: relative;
+            display: block;
+            height: 100%;
+            width: 216px;
+        }
+        .panel-left {
+            float: left;
+        }
+        .panel-right {
+            float: right;
+        } 
+        // .u-divide-panel {
+        //     position: absolute;
+        //     left: $panelWidth;
+        //     bottom: 0;
+        //     display: block;
+        //     width: $middleDivideWidth;
+        //     height: $panelHeight;
+        //     background-color: $dividegrey;
+        // }
+    }
+    .w-picker-calendar-panel {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: $panelWidth * 2 + $middleDivideWidth;
+        height: $headerHeight + $panelHeight;
+    }
+    .w-picker-option {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: $optionHeight;
+        border-top: 1px solid $dividegrey;
+        span {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-block;
+            width: auto;
+            height: 24px;
+            padding: 0 8px;
+            line-height: 22px;
+            cursor: pointer;
+            &:hover {
+                color: $active;
+            }
+            &.btn-opt-view {
+                left: 10px;
+            }
+            &.btn-opt-clear {
+                right: 60px;
+            }
+            &.btn-opt-done {
+                right: 10px;
             }
         }
     }

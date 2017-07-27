@@ -2,7 +2,7 @@
 	<div class="m-picker-input">
 		<input class="w-picker-input" type="text" name="ng-picker-input" ng-model="vmDp.formatVal" placeholder="{{vmDp.placeholder}}" ng-click="vmDp.viewMethods.togglePicker(true)"/>
 	</div>
-	<div class="m-picker-dropdown" ng-class="{'transition-show': vmDp.isOpened, 'no-options': !vmDp.options}">
+	<div id="ng-picker-to-clone" class="m-picker-dropdown" ng-class="{'transition-show': vmDp.isOpened, 'no-options': !vmDp.options}">
 		<div class="w-picker-conf">
 			<span class="config-item" ng-repeat="conf in vmDp.options" ng-click="vmDp.viewMethods.selectOption(conf)">{{conf.name}}</span>
 		</div>
