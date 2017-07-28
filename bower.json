@@ -11,5 +11,15 @@
   },
   "resolutions": {
     "angular": "~1.4.2"
-  }
+  },
+  "homepage": "https://github.com/Gotjoy/ngDatetimePicker",
+  "authors": [
+    "]1kg"
+  ],
+  "description": "datetimerange picker",
+  "keywords": [
+    "datetime",
+    "picker"
+  ],
+  "license": "MIT"
 }

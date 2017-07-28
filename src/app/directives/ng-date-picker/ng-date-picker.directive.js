@@ -28,12 +28,13 @@ export function NgDatePicker() {
 }
 
 class NgDatePickerController {
-    constructor($document, $element, $scope, $filter, moment) {
+    constructor($window, $document, $element, $scope, $timeout, moment) {
         'ngInject';
+        this.Window = $window;
         this.Document = $document;
         this.Element = $element;
         this.Scope = $scope;
-        this.Filter = $filter;
+        this.Timeout = $timeout;
         this.Moment = moment;
     }
 
@@ -46,23 +47,24 @@ class NgDatePickerController {
     }
 
     // 设置动态全局插入Panel
-    setDynamicPanel() {
+    setDynamicPanel(afterThat) {
         const isGlobal = this.Scope.isGlobal;
-        const pos = this.Scope.pos;
+        const posAttr = this.Scope.pos;
         if (isGlobal === true) {
-            const docEle = this.Document[0].documentElement;
             const el = this.Element;
+            const pos = this._getPickerPos(el[0]);
             const docBody = this.Document.find('body');
             const dropdown = this.Document[0].getElementById('ng-picker-to-clone');
-            const PAD = 4;
+            const dropdownMask = this.Document[0].getElementById('ng-mask-to-clone');
             docBody.append(dropdown);
-            // 先硬编码吧
-            // const [clientWidth, clientHeight] = [docEle.clientWidth, docEle.clientHeight];
-            const [inputWidth, inputHeight, panelWidth] = [parseInt(el.css('width')), 30, 530];
-            const [baseLeft, baseTop] = [this._getElementAbsLeft(el[0]), this._getElementAbsTop(el[0])];
+            docBody.append(dropdownMask);
+            const [inputWidth, inputHeight, panelWidth] = [pos.width, pos.height, 530];
+            const [baseLeft, baseTop] = [pos.left, pos.top];
+            const marginTop = 4;
 
-            dropdown.style.top = `${baseTop + inputHeight + PAD}px`;
-            switch(pos){
+            dropdown.style.top = `${baseTop}px`;
+            
+            switch(posAttr){
                 case 'center':
                     dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
                     break;
@@ -71,21 +73,22 @@ class NgDatePickerController {
                     break;
                 case 'cover':
                 case 'cover-left':
-                    dropdown.style.top = `${baseTop - PAD}px`;
+                    dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
                     dropdown.style.left = `${baseLeft}px`;
                     break;
                 case 'cover-center':
-                    dropdown.style.top = `${baseTop - PAD}px`;
+                    dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
                     dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
                     break;
                 case 'cover-right':
-                    dropdown.style.top = `${baseTop - PAD}px`;
+                    dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
                     dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
                     break;
                 default:
                     dropdown.style.left = `${baseLeft}px`;
                     break;
             }
+            afterThat && afterThat();
         }
     }
 
@@ -137,7 +140,12 @@ class NgDatePickerController {
         const vmDp = this;
         this.viewMethods = {
             togglePicker(open) {
-                vmDp.isOpened = open;
+                vmDp.setDynamicPanel(() => {
+                    // vmDp.isOpened = open;
+                    vmDp.Timeout(()=>{
+                        vmDp.isOpened = open;
+                    }, 0);
+                });
             },
             selectOption(conf) {
                 const { start, end } = conf;
@@ -165,23 +173,16 @@ class NgDatePickerController {
         }
     }
 
-    _getElementAbsLeft(element){
-        let actualLeft = element.offsetLeft;
-        let current = element.offsetParent;
-        while(current !== null){
-            actualLeft += current.offsetLeft;
-            current = current.offsetParent;
-        }
-        return actualLeft;
-    }
-
-    _getElementAbsTop(element){
-        let actualTop = element.offsetTop;
-        let current = element.offsetParent;
-        while(current !== null){
-            actualTop += current.offsetTop;
-            current = current.offsetParent;
-        }
-        return actualTop;
+    _getPickerPos(target){
+        const rect = target.getBoundingClientRect();
+        const ww = this.Window.innerWidth;
+        
+        return {
+            top: rect.top + rect.height,
+            right: ww - (rect.left + rect.width),
+            left: rect.left,
+            width: rect.width,
+            height: rect.height
+        };
     }
 }

@@ -8,16 +8,7 @@ ng-date-picker {
     color: $fontColor;
     display: inline-block;
     background-color: #fff;
-    .m-picker-mask {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(255, 255, 255, 0);
-        filter: 0;
-        z-index: 1;
-    }
+    
     .m-picker-input {
         z-index: 2;
         position: relative;
@@ -51,6 +42,17 @@ ng-date-picker {
     }
 }
 
+.m-picker-mask {
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background: rgba(0, 0, 0, 0);
+    filter: 0;
+    z-index: 1;
+}
+
 .m-picker-dropdown {
     position: absolute;
     overflow: hidden;
@@ -70,8 +72,6 @@ ng-date-picker {
     &.transition-show {
         opacity: 1;
         transform: scale(1, 1); 
-        // height: $headerHeight + $panelHeight + $optionHeight; 
-        // width: $panelWidth * 2 + $confWidth + $middleDivideWidth;
     }
     *,
      :after,
@@ -125,16 +125,7 @@ ng-date-picker {
         }
         .panel-right {
             float: right;
-        } 
-        // .u-divide-panel {
-        //     position: absolute;
-        //     left: $panelWidth;
-        //     bottom: 0;
-        //     display: block;
-        //     width: $middleDivideWidth;
-        //     height: $panelHeight;
-        //     background-color: $dividegrey;
-        // }
+        }
     }
     .w-picker-calendar-panel {
         position: absolute;

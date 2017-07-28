@@ -21,12 +21,12 @@
 
     <style type="text/css">
         #test-picker-ctn{
-            position: fixed;
+            position: absolute;
             width: 600px;
             height: 600px;
             overflow: hidden;
             background-color: #fea;
-            left: 100px;
+            left: 240px;
             top: 100px;
         }
         #test-picker{
@@ -60,7 +60,7 @@
         <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
         <ng-date-picker 
           id="test-picker"
-          style="width: 280px;" 
+          style="width: 270px;" 
           value="rctrl.dateConf.value" 
           format="{{rctrl.dateConf.format}}" 
           placeholder="{{rctrl.dateConf.placeholder}}" 
