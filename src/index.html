@@ -60,14 +60,14 @@
         <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
         <ng-date-picker 
           id="test-picker"
-          style="width: 270px;" 
+          style="width: 280px;" 
           value="rctrl.dateConf.value" 
           format="{{rctrl.dateConf.format}}" 
           placeholder="{{rctrl.dateConf.placeholder}}" 
           options="rctrl.dateConf.options"
           on-ok="rctrl.okFunc(value)"
           on-clear="rctrl.clearFunc()"
-          on-change="rctrl.changeFunc()"
+          on-change="rctrl.changeFunc(value)"
           is-global="rctrl.dateConf.isGlobal"
           pos="cover"></ng-date-picker>
     </div>
@@ -83,8 +83,8 @@
         this.clearFunc = function(){
             console.log('clearrrrrrr');
         }
-        this.changeFunc = function(){
-            console.log('changeeeeee');
+        this.changeFunc = function(value){
+            console.log('changeeeeee', value);
         }
         this.dateConf = {
             isGlobal: true,
