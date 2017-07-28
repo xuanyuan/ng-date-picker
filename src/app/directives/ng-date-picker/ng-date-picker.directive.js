@@ -63,7 +63,6 @@ class NgDatePickerController {
             const marginTop = 4;
 
             dropdown.style.top = `${baseTop}px`;
-            
             switch(posAttr){
                 case 'center':
                     dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
@@ -121,7 +120,12 @@ class NgDatePickerController {
             if (v.start != '' && v.end == '') {
                 v.end = moment(v.start).hour(0).minute(0).second(0);
             }
-            this.Scope.onChange();
+            this.Scope.onChange({
+                value: {
+                    start: v.start.valueOf(),
+                    end: v.end.valueOf()
+                }
+            });
             this.setFormatVal(v.start, v.end, this.format);
         }, true);
     }
@@ -141,7 +145,6 @@ class NgDatePickerController {
         this.viewMethods = {
             togglePicker(open) {
                 vmDp.setDynamicPanel(() => {
-                    // vmDp.isOpened = open;
                     vmDp.Timeout(()=>{
                         vmDp.isOpened = open;
                     }, 0);
@@ -167,7 +170,13 @@ class NgDatePickerController {
                 };
             },
             doneValue() {
-                vmDp.Scope.onOk();
+                const v = vmDp.Scope.value;
+                vmDp.Scope.onOk({
+                    value: {
+                        start: v.start.valueOf(),
+                        end: v.end.valueOf()
+                    }
+                });
                 this.togglePicker(false);
             }
         }

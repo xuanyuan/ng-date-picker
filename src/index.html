@@ -65,11 +65,11 @@
           format="{{rctrl.dateConf.format}}" 
           placeholder="{{rctrl.dateConf.placeholder}}" 
           options="rctrl.dateConf.options"
-          on-ok="rctrl.okFunc()"
+          on-ok="rctrl.okFunc(value)"
           on-clear="rctrl.clearFunc()"
           on-change="rctrl.changeFunc()"
           is-global="rctrl.dateConf.isGlobal"
-          pos="cover-right"></ng-date-picker>
+          pos="cover"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])
@@ -77,8 +77,8 @@
 
     function RangeCtrl() {
         var vm = this;
-        this.okFunc = function(){
-            console.log('okkkkkkkkkk');
+        this.okFunc = function(value){
+            console.log('okkkkkkkkkk', value);
         }
         this.clearFunc = function(){
             console.log('clearrrrrrr');
