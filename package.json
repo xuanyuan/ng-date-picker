@@ -1,6 +1,6 @@
 {
   "name": "ng-datetimerange-picker",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "dependencies": {
     "moment": "~2.10.6",
     "angular": "~1.4.2"
@@ -70,5 +70,16 @@
     "day",
     "calendar"
   ],
-  "main": "dist/scripts/ngDatetimeRangePicker.js"
+  "main": "dist/scripts/ngDatetimeRangePicker.js",
+  "description": "一个全新的简洁美观的日期时间范围选择器",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gotjoy/ngDatetimePicker.git"
+  },
+  "author": "ygj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gotjoy/ngDatetimePicker/issues"
+  },
+  "homepage": "https://github.com/Gotjoy/ngDatetimePicker#readme"
 }
