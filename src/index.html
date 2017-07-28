@@ -20,11 +20,20 @@
     <!-- endbuild -->
 
     <style type="text/css">
+        #test-picker-ctn{
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            overflow: hidden;
+            background-color: #fea;
+            left: 100px;
+            top: 100px;
+        }
         #test-picker{
          /*   position: absolute;
             left: 50%;
             top:20%;*/
-            margin: 100px 400px;
+            margin: 60px 40px;
         }
     </style>
 </head>
@@ -46,7 +55,7 @@
     <!-- angular templates will be automatically converted in js and inserted here -->
     <!-- endinject -->
     <!-- endbuild -->
-    <div ng-controller="RangeController as rctrl">
+    <div id="test-picker-ctn" ng-controller="RangeController as rctrl">
         <!-- <h1>日期时间组件（ng1.x）</h1> -->
         <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
         <ng-date-picker 
@@ -60,7 +69,7 @@
           on-clear="rctrl.clearFunc()"
           on-change="rctrl.changeFunc()"
           is-global="rctrl.dateConf.isGlobal"
-          pos="center"></ng-date-picker>
+          pos="cover-right"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])

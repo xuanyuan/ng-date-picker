@@ -50,15 +50,18 @@ class NgDatePickerController {
         const isGlobal = this.Scope.isGlobal;
         const pos = this.Scope.pos;
         if (isGlobal === true) {
+            const docEle = this.Document[0].documentElement;
             const el = this.Element;
-            const docEl = this.Document.find('body');
+            const docBody = this.Document.find('body');
             const dropdown = this.Document[0].getElementById('ng-picker-to-clone');
-            docEl.append(dropdown);
+            const PAD = 4;
+            docBody.append(dropdown);
             // 先硬编码吧
-            const [baseLeft, baseTop] = [el.prop('offsetLeft'), el.prop('offsetTop')];
+            // const [clientWidth, clientHeight] = [docEle.clientWidth, docEle.clientHeight];
             const [inputWidth, inputHeight, panelWidth] = [parseInt(el.css('width')), 30, 530];
+            const [baseLeft, baseTop] = [this._getElementAbsLeft(el[0]), this._getElementAbsTop(el[0])];
 
-            dropdown.style.top = `${baseTop + inputHeight}px`;
+            dropdown.style.top = `${baseTop + inputHeight + PAD}px`;
             switch(pos){
                 case 'center':
                     dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
@@ -67,8 +70,17 @@ class NgDatePickerController {
                     dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
                     break;
                 case 'cover':
-                    dropdown.style.top = `${baseTop}px`;
+                case 'cover-left':
+                    dropdown.style.top = `${baseTop - PAD}px`;
                     dropdown.style.left = `${baseLeft}px`;
+                    break;
+                case 'cover-center':
+                    dropdown.style.top = `${baseTop - PAD}px`;
+                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
+                    break;
+                case 'cover-right':
+                    dropdown.style.top = `${baseTop - PAD}px`;
+                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
                     break;
                 default:
                     dropdown.style.left = `${baseLeft}px`;
@@ -151,5 +163,25 @@ class NgDatePickerController {
                 this.togglePicker(false);
             }
         }
+    }
+
+    _getElementAbsLeft(element){
+        let actualLeft = element.offsetLeft;
+        let current = element.offsetParent;
+        while(current !== null){
+            actualLeft += current.offsetLeft;
+            current = current.offsetParent;
+        }
+        return actualLeft;
+    }
+
+    _getElementAbsTop(element){
+        let actualTop = element.offsetTop;
+        let current = element.offsetParent;
+        while(current !== null){
+            actualTop += current.offsetTop;
+            current = current.offsetParent;
+        }
+        return actualTop;
     }
 }
