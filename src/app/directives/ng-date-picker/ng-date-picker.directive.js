@@ -39,11 +39,14 @@ class NgDatePickerController {
     }
 
     init() {
+        const Timeout = this.Timeout;
         this.setStaticConf();
         this.setConf();
         this.setViewMethods();
         this.setWatchers();
-        this.setDynamicPanel();
+        Timeout(()=>{
+            this.setDynamicPanel();
+        }, 0);
     }
 
     // 设置动态全局插入Panel
@@ -54,8 +57,8 @@ class NgDatePickerController {
             const el = this.Element;
             const pos = this._getPickerPos(el[0]);
             const docBody = this.Document.find('body');
-            const dropdown = this.Document[0].getElementById('ng-picker-to-clone');
-            const dropdownMask = this.Document[0].getElementById('ng-mask-to-clone');
+            const dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
+            const dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
             docBody.append(dropdown);
             docBody.append(dropdownMask);
             const [inputWidth, inputHeight, panelWidth] = [pos.width, pos.height, 530];
@@ -99,6 +102,7 @@ class NgDatePickerController {
         this.placeholder = Scope.placeholder || '请选择日期时间范围';
         this.formatVal = '';
         this.isOpened = false;
+        this.SCOPE_ID = Math.round(Math.random()*1e9);
     }
 
     setConf() {
