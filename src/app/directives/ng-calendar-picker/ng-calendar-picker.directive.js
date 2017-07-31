@@ -4,7 +4,9 @@ export function NgCalendarPicker() {
     let directive = {
         restrict: 'E',
         scope: {
-            value: '='
+            value: '=',
+            minDay: '=',
+            maxDay: '='
         },
         controller: NgCalendarPickerController,
         controllerAs: 'vmCp',
@@ -44,8 +46,10 @@ class NgCalendarPickerController {
         this.monthConf = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
         // 根据当前年进行初始配置
         const value = this.Scope.value;
+        this.minDay = this.Scope.minDay;
+        this.maxDay = this.Scope.maxDay;
         let nsYear, neYear;
-        // console.log('HAS VAL: ', this.hasVal)
+
         if (this.hasVal) {
             nsYear = value.start.year();
             neYear = value.end.year();
@@ -56,6 +60,8 @@ class NgCalendarPickerController {
 
         this.nsYearConf = this._getRangeYears(nsYear);
         this.neYearConf = this._getRangeYears(neYear);
+        this.nsMonthConf = this._getRangeMonths();
+        this.neMonthConf = this._getRangeMonths();
     }
 
     setConf() {
@@ -70,14 +76,20 @@ class NgCalendarPickerController {
                 start,
                 year: start.year(),
                 month: start.month(),
-                date: start.date()
+                date: start.date(),
+                hour: start.hour(),
+                minute: start.minute(),
+                second: start.second()
             };
 
             this.end = {
                 end,
                 year: end.year(),
                 month: end.month(),
-                date: end.date()
+                date: end.date(),
+                hour: start.hour(),
+                minute: start.minute(),
+                second: start.second()
             };
         } else {
             const m = moment();
@@ -85,6 +97,9 @@ class NgCalendarPickerController {
                 year: m.year(),
                 month: m.month(),
                 date: m.date(),
+                hour: start.hour(),
+                minute: start.minute(),
+                second: start.second(),
                 disabled: true
             }
         }
@@ -124,7 +139,7 @@ class NgCalendarPickerController {
             selectDate(which, d) {
                 autoValue();
                 // 当前月
-                if (d.at) {
+                if (d.at && !d.limited) {
                     vmCp.Scope.value[which].date(d.n);
                     // 若在单个日历范围内已经选择值，则有可能是用户在单个日历中选择范围
                     vmCp.dateConf = {
@@ -133,15 +148,21 @@ class NgCalendarPickerController {
                     };
                 }
             },
-            selectMonth(which, index) {
+            selectMonth(which, index, m) {
+                if(m.monthLimited){
+                    return;
+                }
                 autoValue();
                 vmCp.Scope.value[which].month(index);
                 vmCp.setConf();
                 vmCp.panel[which === 'start' ? 'left' : 'right'] = 'date';
             },
-            selectYear(which, index) {
+            selectYear(which, y) {
+                if(y.yearLimited){
+                    return;
+                }
                 autoValue();
-                vmCp.Scope.value[which].year(index);
+                vmCp.Scope.value[which].year(y.i);
                 vmCp.setConf();
                 vmCp.panel[which === 'start' ? 'left' : 'right'] = 'month';
             },
@@ -166,11 +187,47 @@ class NgCalendarPickerController {
     }
 
     _getRangeYears(now) {
-        let serialAry = [];
+        const moment = this.Moment;
+        const vmCp = this;
+        const bYear = vmCp.minDay.year();
+        const eYear = vmCp.maxDay.year();
+        let yearSet = [];
         for (let i = now - 4; i < now + 8; i++) {
-            serialAry.push(i);
+            const yearLimited = (() => {
+                if(i >= bYear && i <= eYear){
+                    return false;
+                } else {
+                    return true;
+                }
+            })();
+            yearSet.push({
+                i, yearLimited
+            });
         }
-        return serialAry;
+        return yearSet;
+    }
+
+    _getRangeMonths(){
+        const moment = this.Moment;
+        const vmCp = this;
+        const bMonth = vmCp.minDay.month();
+        const eMonth = vmCp.maxDay.month();
+        let monthSet = [];
+        let monthConf = this.monthConf;
+        for(let i = 0; i < monthConf.length; i++){
+            const monthLimited = (() => {
+                if( i >= bMonth && i <= eMonth){
+                    return false;
+                } else {
+                    return true;
+                }
+            })();
+            monthSet.push({
+                i: monthConf[i],
+                monthLimited
+            })
+        }
+        return monthSet;
     }
 
     _getRangeDates(now) {
@@ -217,9 +274,19 @@ class NgCalendarPickerController {
                     n: nextD++
                 });
             } else {
+                // 当前月
+                const _atD = atD++;
+                // 是否在限制范围内
+                const _now = moment([now.year, now.month, now.date, now.hour, now.minute, now.second]).date(_atD).valueOf();
+                const limited = (() => {
+                    if(_now < vmCp.minDay.valueOf() || _now > vmCp.maxDay.valueOf()){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                })();
+
                 if (vmCp.hasVal) {
-                    // 当前月
-                    const _atD = atD++;
                     // 选择值
                     const selected = (() => {
                         if ((now.year === vmCp.start.year && now.month === vmCp.start.month && _atD === vmCp.start.date) || (now.year === vmCp.end.year && now.month === vmCp.end.month && _atD === vmCp.end.date)) {
@@ -236,7 +303,6 @@ class NgCalendarPickerController {
                     })();
                     // 日期在范围之中
                     const inRange = (() => {
-                        const _now = moment([now.year, now.month]).date(_atD).valueOf();
                         const [_start, _end] = [vmCp.Scope.value.start, vmCp.Scope.value.end];
                         const [from, to] = [
                             moment([_start.year(), _start.month(), _start.date()]).endOf('day').valueOf(),
@@ -250,13 +316,14 @@ class NgCalendarPickerController {
                         n: _atD,
                         selected,
                         forbidden,
-                        inRange
+                        inRange,
+                        limited
                     });
                 } else {
-                    const _atD = atD++;
                     cells.push({
                         at: true,
-                        n: _atD
+                        n: _atD,
+                        limited
                     });
                 }
             }

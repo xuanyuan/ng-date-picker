@@ -69,6 +69,8 @@
           on-clear="rctrl.clearFunc()"
           on-change="rctrl.changeFunc(value)"
           is-global="rctrl.dateConf.isGlobal"
+          min-day="rctrl.dateConf.minDay"
+          max-day="rctrl.dateConf.maxDay"
           pos="right"></ng-date-picker>
     </div>
     <script>
@@ -88,31 +90,34 @@
         }
         this.dateConf = {
             isGlobal: true,
+            minDay: moment().subtract(30, 'd'),
+            maxDay: moment().add(3, 'M').add(2, 'y'),
             value: {
-                start: moment(),
-                end: moment().month(11).add(1, 'y').add(2, 'd').add(13, 'h').add(2, 'm').add(3, 's')
+                start: moment().subtract(15, 'm'),
+                end: moment()
             },
             format: 'YYYY-MM-DD HH:mm:ss',
             placeholder: '请选择日期范围',
-            options: [{
-                    name: '今天',
-                    start: moment().startOf('day'),
-                    end: moment().endOf('day')
-                },
+            options: [
                 {
-                    name: '昨天',
-                    start: moment(),
-                    end: moment().subtract(1, 'd')
-                },
-                {
-                    name: '当前月',
-                    start: moment().startOf('month'),
+                    name: '最近15分钟',
+                    start: moment().subtract(15, 'm'),
                     end: moment()
                 },
                 {
-                    name: '一年又两个月',
-                    start: moment().subtract(1, 'M'),
-                    end: moment().add(1, 'y').add(1, 'M')
+                    name: '最近1小时',
+                    start: moment().subtract(1, 'h'),
+                    end: moment()
+                },
+                {
+                    name: '最近4小时',
+                    start: moment().subtract(4, 'h'),
+                    end: moment()
+                },
+                {
+                    name: '最近1天',
+                    start: moment().subtract(1, 'd'),
+                    end: moment()
                 }
             ]
         };

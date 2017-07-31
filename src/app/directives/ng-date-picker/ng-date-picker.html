@@ -17,7 +17,7 @@
 		</div>
 		<div class="w-picker-calendar-panel" ng-show="vmDp.views === 'calendar'">
 			<!-- 暂时只做range的考虑 -->
-			<ng-calendar-picker value="vmDp.value"></ng-calendar-picker>
+			<ng-calendar-picker value="vmDp.value" min-day="vmDp.minDay" max-day="vmDp.maxDay"></ng-calendar-picker>
 		</div>
 
 		<div class="w-picker-option">

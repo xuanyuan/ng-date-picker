@@ -13,7 +13,9 @@ export function NgDatePicker() {
             onOk: '&',
             onClear: '&',
             onChange: '&',
-            isGlobal: '='
+            isGlobal: '=',
+            minDay: '=',
+            maxDay: '='
         },
         controller: NgDatePickerController,
         controllerAs: 'vmDp',
@@ -60,6 +62,8 @@ class NgDatePickerController {
         const Scope = this.Scope;
         this.format = Scope.format || 'YYYY-MM-DD HH:mm:ss';
         this.value = Scope.value;
+        this.minDay = Scope.minDay;
+        this.maxDay = Scope.maxDay;
         this.options = Scope.options;
         this.placeholder = Scope.placeholder || '请选择日期时间范围';
         this.formatVal = '';

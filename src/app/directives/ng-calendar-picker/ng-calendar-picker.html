@@ -8,14 +8,14 @@
 	<div class="w-calendar-body">
 		<!-- 选择年 -->
 		<div ng-show="vmCp.panel.left === 'year'" class="panel panel-choose-year">
-			<div class="u-cell-year" ng-repeat="conf in vmCp.nsYearConf" ng-class="{'selected': !vmCp.start.disabled && vmCp.start.year === conf}">
-				<span ng-click="vmCp.viewMethods.selectYear('start', conf)">{{conf}}</span>
+			<div class="u-cell-year" ng-repeat="conf in vmCp.nsYearConf" ng-class="{'selected': !vmCp.start.disabled && vmCp.start.year === conf.i, 'disabled': conf.yearLimited}">
+				<span ng-click="vmCp.viewMethods.selectYear('start', conf)">{{conf.i}}</span>
 			</div>
 		</div>
 		<!-- 选择月 -->
 		<div ng-show="vmCp.panel.left === 'month'" class="panel panel-choose-month">
-			<div class="u-cell-month" ng-repeat="conf in vmCp.monthConf" ng-class="{'selected': !vmCp.start.disabled && vmCp.start.month === $index}">
-				<span ng-click="vmCp.viewMethods.selectMonth('start', $index)">{{conf}}</span>
+			<div class="u-cell-month" ng-repeat="conf in vmCp.nsMonthConf" ng-class="{'selected': !vmCp.start.disabled && vmCp.start.month === $index, 'disabled': conf.monthLimited}">
+				<span ng-click="vmCp.viewMethods.selectMonth('start', $index, conf)">{{conf.i}}</span>
 			</div>
 		</div>
 		<!-- 选择日 -->
@@ -23,7 +23,7 @@
 			<div class="u-cell-date-header">
 				<span ng-repeat="conf in vmCp.weekConf">{{conf}}</span>
 			</div>
-			<div class="u-cell-date" ng-repeat="conf in vmCp.dateConf.left" ng-class="{'disabled': !conf.at, 'selected': conf.selected, 'forbidden': conf.forbidden, 'range': conf.inRange}">
+			<div class="u-cell-date" ng-repeat="conf in vmCp.dateConf.left" ng-class="{'disabled': !conf.at || conf.limited, 'selected': conf.selected, 'forbidden': conf.forbidden, 'range': conf.inRange}">
 				<span ng-click="vmCp.viewMethods.selectDate('start', conf)">{{conf.n}}</span>
 			</div>
 		</div>
@@ -40,14 +40,14 @@
 	<div class="w-calendar-body">
 		<!-- 选择年 -->
 		<div ng-show="vmCp.panel.right === 'year'" class="panel panel-choose-year">
-			<div class="u-cell-year" ng-repeat="conf in vmCp.neYearConf" ng-class="{'selected': !vmCp.end.disabled && vmCp.end.year === conf}">
-				<span ng-click="vmCp.viewMethods.selectYear('end', conf)">{{conf}}</span>
+			<div class="u-cell-year" ng-repeat="conf in vmCp.neYearConf" ng-class="{'selected': !vmCp.end.disabled && vmCp.end.year === conf.i, 'disabled': conf.yearLimited}">
+				<span ng-click="vmCp.viewMethods.selectYear('end', conf)">{{conf.i}}</span>
 			</div>
 		</div>
 		<!-- 选择月 -->
 		<div ng-show="vmCp.panel.right === 'month'" class="panel panel-choose-month">
-			<div class="u-cell-month" ng-repeat="conf in vmCp.monthConf" ng-class="{'selected': !vmCp.end.disabled && vmCp.end.month === $index}">
-				<span ng-click="vmCp.viewMethods.selectMonth('end', $index)">{{conf}}</span>
+			<div class="u-cell-month" ng-repeat="conf in vmCp.neMonthConf" ng-class="{'selected': !vmCp.end.disabled && vmCp.end.month === $index, 'disabled': conf.monthLimited}">
+				<span ng-click="vmCp.viewMethods.selectMonth('end', $index, conf)">{{conf.i}}</span>
 			</div>
 		</div>
 		<!-- 选择日 -->
@@ -55,7 +55,7 @@
 			<div class="u-cell-date-header">
 				<span ng-repeat="conf in vmCp.weekConf">{{conf}}</span>
 			</div>
-			<div class="u-cell-date" ng-repeat="conf in vmCp.dateConf.right" ng-class="{'disabled': !conf.at, 'selected': conf.selected, 'forbidden': conf.forbidden, 'range': conf.inRange}">
+			<div class="u-cell-date" ng-repeat="conf in vmCp.dateConf.right" ng-class="{'disabled': !conf.at || conf.limited, 'selected': conf.selected, 'forbidden': conf.forbidden, 'range': conf.inRange}">
 				<span ng-click="vmCp.viewMethods.selectDate('end', conf)">{{conf.n}}</span>
 			</div>
 		</div>
