@@ -596,8 +596,7 @@
 	            this.setConf();
 	            this.setViewMethods();
 	            this.setWatchers();
-	            this.CloneDropdown = null;
-	            this.CloneMask = null;
+	            this.CloneOutside = false;
 	            this.Scope.$on('$destroy', function () {
 	                _this.removeDynamicPanel();
 	            });
@@ -634,16 +633,15 @@
 	        value: function setDynamicPanel(afterThat) {
 	            var isGlobal = this.Scope.isGlobal;
 	            var posAttr = this.Scope.pos;
-	            if (isGlobal === true) {
+	            if (isGlobal) {
 	                var el = this.Element;
 	                var pos = this._getPickerPos(el[0]);
 	                var docBody = this.Document.find('body');
 	                var dropdown = this.Document[0].getElementById('ng-picker-to-clone__' + this.SCOPE_ID);
 	                var dropdownMask = this.Document[0].getElementById('ng-mask-to-clone__' + this.SCOPE_ID);
-	                // dropdown = dropdown ? dropdown : this.CloneDropdown;
-	                // dropdownMask = dropdownMask ? dropdownMask : this.CloneMask;
 	                docBody.append(dropdown);
 	                docBody.append(dropdownMask);
+	                this.CloneOutside = true;
 	                var inputWidth = pos.width;
 	                var inputHeight = pos.height;
 	                var panelWidth = 530;
@@ -689,14 +687,19 @@
 
 	            var isGlobal = this.Scope.isGlobal;
 	            var Timeout = this.Timeout;
-	            if (isGlobal === true) {
+	            if (isGlobal && this.CloneOutside) {
 	                (function () {
 	                    var docBody = _this2.Document.find('body')[0];
 	                    var dropdown = _this2.Document[0].getElementById('ng-picker-to-clone__' + _this2.SCOPE_ID);
 	                    var dropdownMask = _this2.Document[0].getElementById('ng-mask-to-clone__' + _this2.SCOPE_ID);
 	                    Timeout(function () {
-	                        docBody.removeChild(dropdown);
-	                        docBody.removeChild(dropdownMask);
+
+	                        if (dropdown) {
+	                            docBody.removeChild(dropdown);
+	                        }
+	                        if (dropdownMask) {
+	                            docBody.removeChild(dropdownMask);
+	                        }
 	                    }, 200);
 	                })();
 	            }

@@ -43,8 +43,7 @@ class NgDatePickerController {
         this.setConf();
         this.setViewMethods();
         this.setWatchers();
-        this.CloneDropdown = null;
-        this.CloneMask = null;
+        this.CloneOutside = false;
         this.Scope.$on('$destroy', () => {
             this.removeDynamicPanel();
         });
@@ -75,16 +74,15 @@ class NgDatePickerController {
     setDynamicPanel(afterThat) {
         const isGlobal = this.Scope.isGlobal;
         const posAttr = this.Scope.pos;
-        if (isGlobal === true) {
+        if (isGlobal) {
             const el = this.Element;
             const pos = this._getPickerPos(el[0]);
             const docBody = this.Document.find('body');
             let dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
             let dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
-            // dropdown = dropdown ? dropdown : this.CloneDropdown;
-            // dropdownMask = dropdownMask ? dropdownMask : this.CloneMask;
             docBody.append(dropdown);
             docBody.append(dropdownMask);
+            this.CloneOutside = true;
             const [inputWidth, inputHeight, panelWidth] = [pos.width, pos.height, 530];
             const [baseLeft, baseTop] = [pos.left, pos.top];
             const marginTop = 4;
@@ -122,13 +120,18 @@ class NgDatePickerController {
     removeDynamicPanel(afterThat){
         const isGlobal = this.Scope.isGlobal;
         const Timeout = this.Timeout;
-        if (isGlobal === true){
+        if (isGlobal && this.CloneOutside){
             const docBody = this.Document.find('body')[0];
             const dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
             const dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
             Timeout(()=>{
-                docBody.removeChild(dropdown);
-                docBody.removeChild(dropdownMask);
+
+                if(dropdown){
+                    docBody.removeChild(dropdown);
+                }
+                if(dropdownMask){
+                    docBody.removeChild(dropdownMask);
+                }
             }, 200);
         }
         afterThat && afterThat();
