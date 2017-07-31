@@ -54,7 +54,7 @@ ng-date-picker {
 }
 
 .m-picker-dropdown {
-    position: absolute;
+    position: fixed;
     overflow: hidden;
     width: $panelWidth * 2 + $confWidth + $middleDivideWidth;
     height: $headerHeight + $panelHeight + $optionHeight; 

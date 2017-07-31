@@ -39,11 +39,18 @@ class NgDatePickerController {
     }
 
     init() {
+        const Win = this.Window;
         this.setStaticConf();
         this.setConf();
         this.setViewMethods();
         this.setWatchers();
         this.CloneOutside = false;
+        Win.onscroll = () => {
+            this.setDynamicPanel();
+        };
+        Win.onresize = () => {
+            this.setDynamicPanel();
+        };
         this.Scope.$on('$destroy', () => {
             this.removeDynamicPanel();
         });

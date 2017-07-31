@@ -16,7 +16,7 @@
         }
     </style></head><body><!--[if lt IE 9]>
  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
- <![endif]--><script src="scripts/vendor.js"></script><script src="scripts/ngDatetimeRangePicker.js"></script><div id="test-picker-ctn" ng-controller="RangeController as rctrl"><h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2><ng-date-picker id="test-picker" style="width: 280px;" value="rctrl.dateConf.value" format="{{rctrl.dateConf.format}}" placeholder="{{rctrl.dateConf.placeholder}}" options="rctrl.dateConf.options" on-ok="rctrl.okFunc(value)" on-clear="rctrl.clearFunc()" on-change="rctrl.changeFunc(value)" is-global="rctrl.dateConf.isGlobal" pos="cover"></ng-date-picker></div><script>
+ <![endif]--><script src="scripts/vendor.js"></script><script src="scripts/ngDatetimeRangePicker.js"></script><div id="test-picker-ctn" ng-controller="RangeController as rctrl"><h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2><ng-date-picker id="test-picker" style="width: 280px;" value="rctrl.dateConf.value" format="{{rctrl.dateConf.format}}" placeholder="{{rctrl.dateConf.placeholder}}" options="rctrl.dateConf.options" on-ok="rctrl.okFunc(value)" on-clear="rctrl.clearFunc()" on-change="rctrl.changeFunc(value)" is-global="rctrl.dateConf.isGlobal" pos="right"></ng-date-picker></div><script>
     angular.module('demo', ['ngDatetimeRangePicker'])
         .controller('RangeController', RangeCtrl);
 

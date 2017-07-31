@@ -47,15 +47,15 @@ c. 使用指令`ng-date-picker`
 Configurations
 -------------
 
-目前总共提供四个配置选项
+目前总共提供以下配置选项：
 
 - [必选 Object] value：日期时间范围，格式为：{ start: moment(), end: moment()}
 - [可选 String] format：格式，配置参考moment.js
 - [可选 String] placeholder: 占位符
 - [可选 Object] options：可选配置项
-- [可选 Function] on-ok：点击确定回调的钩子函数
+- [可选 Function] on-ok：点击确定回调的钩子函数（返回value参数）
 - [可选 Function] on-clear：点击清空回调的钩子函数
-- [可选 Function] on-change：当值发生变化时回调的钩子函数
+- [可选 Function] on-change：当值发生变化时回调的钩子函数（返回value参数）
 - [可选 Boolean] is-global: 是否应用到全局环境，默认为false，即相对input的位置出现。true情况下将添加到全局body中，此时不会被任何东西遮盖（比如父级的overhidden）
 - [可选 Attribute] pos: 组件面板出现的位置。在is-global配置为true的情况下生效。选项分别为`center right cover cover-center cover-left cover-right`。
 

@@ -1,6 +1,6 @@
 <div class="ng-date-picker-container">
 	<div class="m-picker-input">
-		<input class="w-picker-input" type="text" name="ng-picker-input" ng-model="vmDp.formatVal" placeholder="{{vmDp.placeholder}}" ng-click="vmDp.viewMethods.togglePicker(true)"/>
+		<input aria-label="日期组件" class="w-picker-input" type="text" name="ng-picker-input" ng-model="vmDp.formatVal" placeholder="{{vmDp.placeholder}}" ng-click="vmDp.viewMethods.togglePicker(true)"/>
 	</div>
 	<div id="ng-picker-to-clone__{{vmDp.SCOPE_ID}}" class="m-picker-dropdown" ng-class="{'transition-show': vmDp.isOpened, 'no-options': !vmDp.options}">
 		<div class="w-picker-conf">
