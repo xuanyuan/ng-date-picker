@@ -37,7 +37,6 @@ class NgCalendarPickerController {
     }
 
     setStaticConf() {
-        const moment = this.Moment;
         this.panel = {
             left: 'date',
             right: 'date'
@@ -45,23 +44,8 @@ class NgCalendarPickerController {
         this.weekConf = ['日', '一', '二', '三', '四', '五', '六'];
         this.monthConf = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
         // 根据当前年进行初始配置
-        const value = this.Scope.value;
         this.minDay = this.Scope.minDay;
         this.maxDay = this.Scope.maxDay;
-        let nsYear, neYear;
-
-        if (this.hasVal) {
-            nsYear = value.start.year();
-            neYear = value.end.year();
-        } else {
-            const y = moment().year();
-            nsYear = neYear = y;
-        }
-
-        this.nsYearConf = this._getRangeYears(nsYear);
-        this.neYearConf = this._getRangeYears(neYear);
-        this.nsMonthConf = this._getRangeMonths();
-        this.neMonthConf = this._getRangeMonths();
     }
 
     setConf() {
@@ -109,6 +93,10 @@ class NgCalendarPickerController {
             right: this._getRangeDates(this.end)
         };
 
+        this.nsYearConf = this._getRangeYears(this.start.year);
+        this.neYearConf = this._getRangeYears(this.end.year);
+        this.nsMonthConf = this._getRangeMonths(this.start);
+        this.neMonthConf = this._getRangeMonths(this.end);
     }
 
     setWatchers() {
@@ -153,7 +141,10 @@ class NgCalendarPickerController {
                     return;
                 }
                 autoValue();
-                vmCp.Scope.value[which].month(index);
+                // 假如超出限制
+                const _d = vmCp.Scope.value[which].month(index);
+                if(_d.valueOf() <= vmCp.minDay.valueOf()) vmCp.Scope.value[which].month(index).date(vmCp.minDay.date() + 1);
+                if(_d.valueOf() >= vmCp.maxDay.valueOf()) vmCp.Scope.value[which].month(index).date(vmCp.maxDay.date());
                 vmCp.setConf();
                 vmCp.panel[which === 'start' ? 'left' : 'right'] = 'date';
             },
@@ -187,7 +178,6 @@ class NgCalendarPickerController {
     }
 
     _getRangeYears(now) {
-        const moment = this.Moment;
         const vmCp = this;
         const bYear = vmCp.minDay.year();
         const eYear = vmCp.maxDay.year();
@@ -207,16 +197,24 @@ class NgCalendarPickerController {
         return yearSet;
     }
 
-    _getRangeMonths(){
-        const moment = this.Moment;
+    _getRangeMonths(now){
         const vmCp = this;
         const bMonth = vmCp.minDay.month();
         const eMonth = vmCp.maxDay.month();
+        const iYear = now.year;
+        const bYear = vmCp.minDay.year();
+        const eYear = vmCp.maxDay.year();
         let monthSet = [];
         let monthConf = this.monthConf;
+        console.log(bMonth, eMonth, iYear, bYear, eYear);
         for(let i = 0; i < monthConf.length; i++){
             const monthLimited = (() => {
-                if( i >= bMonth && i <= eMonth){
+                if(iYear > bYear && iYear < eYear){
+                    return false;
+                } else if ((iYear === bYear && i >= bMonth) || (iYear === eYear && i <= eMonth)){
+                    if(!(bYear === eYear && (i >= bMonth && i <= eMonth))){
+                        return true;
+                    }
                     return false;
                 } else {
                     return true;

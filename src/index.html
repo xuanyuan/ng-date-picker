@@ -90,8 +90,10 @@
         }
         this.dateConf = {
             isGlobal: true,
+            // minDay: moment().subtract(30, 'd'),
+            // maxDay: moment().add(3, 'M').add(2, 'y').add(2, 'day'),
             minDay: moment().subtract(30, 'd'),
-            maxDay: moment().add(3, 'M').add(2, 'y'),
+            maxDay: moment(),
             value: {
                 start: moment().subtract(15, 'm'),
                 end: moment()
