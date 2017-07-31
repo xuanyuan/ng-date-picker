@@ -39,14 +39,36 @@ class NgDatePickerController {
     }
 
     init() {
-        const Timeout = this.Timeout;
         this.setStaticConf();
         this.setConf();
         this.setViewMethods();
         this.setWatchers();
-        Timeout(()=>{
-            this.setDynamicPanel();
-        }, 0);
+        this.CloneDropdown = null;
+        this.CloneMask = null;
+        this.Scope.$on('$destroy', () => {
+            this.removeDynamicPanel();
+        });
+    }
+
+    setStaticConf() {
+        const Scope = this.Scope;
+        this.format = Scope.format || 'YYYY-MM-DD HH:mm:ss';
+        this.value = Scope.value;
+        this.options = Scope.options;
+        this.placeholder = Scope.placeholder || '请选择日期时间范围';
+        this.formatVal = '';
+        this.isOpened = false;
+        this.SCOPE_ID = Math.round(Math.random()*1e9);
+    }
+
+    setConf() {
+        this.views = 'calendar';
+        // 如果左值大于右值，则应该进行交换
+        const start = this.Scope.value.start.valueOf();
+        const end = this.Scope.value.end.valueOf();
+        if (start > end) {
+            [this.Scope.value.start, this.Scope.value.end] = [this.Scope.value.end, this.Scope.value.start];
+        }
     }
 
     // 设置动态全局插入Panel
@@ -57,8 +79,10 @@ class NgDatePickerController {
             const el = this.Element;
             const pos = this._getPickerPos(el[0]);
             const docBody = this.Document.find('body');
-            const dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
-            const dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
+            let dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
+            let dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
+            // dropdown = dropdown ? dropdown : this.CloneDropdown;
+            // dropdownMask = dropdownMask ? dropdownMask : this.CloneMask;
             docBody.append(dropdown);
             docBody.append(dropdownMask);
             const [inputWidth, inputHeight, panelWidth] = [pos.width, pos.height, 530];
@@ -94,25 +118,20 @@ class NgDatePickerController {
         }
     }
 
-    setStaticConf() {
-        const Scope = this.Scope;
-        this.format = Scope.format || 'YYYY-MM-DD HH:mm:ss';
-        this.value = Scope.value;
-        this.options = Scope.options;
-        this.placeholder = Scope.placeholder || '请选择日期时间范围';
-        this.formatVal = '';
-        this.isOpened = false;
-        this.SCOPE_ID = Math.round(Math.random()*1e9);
-    }
-
-    setConf() {
-        this.views = 'calendar';
-        // 如果左值大于右值，则应该进行交换
-        const start = this.Scope.value.start.valueOf();
-        const end = this.Scope.value.end.valueOf();
-        if (start > end) {
-            [this.Scope.value.start, this.Scope.value.end] = [this.Scope.value.end, this.Scope.value.start];
+    // 销毁Panel
+    removeDynamicPanel(afterThat){
+        const isGlobal = this.Scope.isGlobal;
+        const Timeout = this.Timeout;
+        if (isGlobal === true){
+            const docBody = this.Document.find('body')[0];
+            const dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
+            const dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
+            Timeout(()=>{
+                docBody.removeChild(dropdown);
+                docBody.removeChild(dropdownMask);
+            }, 200);
         }
+        afterThat && afterThat();
     }
 
     setWatchers() {
@@ -148,11 +167,16 @@ class NgDatePickerController {
         const vmDp = this;
         this.viewMethods = {
             togglePicker(open) {
-                vmDp.setDynamicPanel(() => {
-                    vmDp.Timeout(()=>{
-                        vmDp.isOpened = open;
-                    }, 0);
-                });
+                if(open){
+                    vmDp.setDynamicPanel(() => {
+                        vmDp.Timeout(()=>{
+                            vmDp.isOpened = open;
+                        }, 0);
+                    });
+                }else{
+                    vmDp.isOpened = open;
+                }
+                
             },
             selectOption(conf) {
                 const { start, end } = conf;

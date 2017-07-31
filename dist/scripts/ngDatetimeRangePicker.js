@@ -592,14 +592,40 @@
 	        value: function init() {
 	            var _this = this;
 
-	            var Timeout = this.Timeout;
 	            this.setStaticConf();
 	            this.setConf();
 	            this.setViewMethods();
 	            this.setWatchers();
-	            Timeout(function () {
-	                _this.setDynamicPanel();
-	            }, 0);
+	            this.CloneDropdown = null;
+	            this.CloneMask = null;
+	            this.Scope.$on('$destroy', function () {
+	                _this.removeDynamicPanel();
+	            });
+	        }
+	    }, {
+	        key: 'setStaticConf',
+	        value: function setStaticConf() {
+	            var Scope = this.Scope;
+	            this.format = Scope.format || 'YYYY-MM-DD HH:mm:ss';
+	            this.value = Scope.value;
+	            this.options = Scope.options;
+	            this.placeholder = Scope.placeholder || '请选择日期时间范围';
+	            this.formatVal = '';
+	            this.isOpened = false;
+	            this.SCOPE_ID = Math.round(Math.random() * 1e9);
+	        }
+	    }, {
+	        key: 'setConf',
+	        value: function setConf() {
+	            this.views = 'calendar';
+	            // 如果左值大于右值，则应该进行交换
+	            var start = this.Scope.value.start.valueOf();
+	            var end = this.Scope.value.end.valueOf();
+	            if (start > end) {
+	                var _ref = [this.Scope.value.end, this.Scope.value.start];
+	                this.Scope.value.start = _ref[0];
+	                this.Scope.value.end = _ref[1];
+	            }
 	        }
 
 	        // 设置动态全局插入Panel
@@ -614,6 +640,8 @@
 	                var docBody = this.Document.find('body');
 	                var dropdown = this.Document[0].getElementById('ng-picker-to-clone__' + this.SCOPE_ID);
 	                var dropdownMask = this.Document[0].getElementById('ng-mask-to-clone__' + this.SCOPE_ID);
+	                // dropdown = dropdown ? dropdown : this.CloneDropdown;
+	                // dropdownMask = dropdownMask ? dropdownMask : this.CloneMask;
 	                docBody.append(dropdown);
 	                docBody.append(dropdownMask);
 	                var inputWidth = pos.width;
@@ -652,35 +680,32 @@
 	                afterThat && afterThat();
 	            }
 	        }
+
+	        // 销毁Panel
 	    }, {
-	        key: 'setStaticConf',
-	        value: function setStaticConf() {
-	            var Scope = this.Scope;
-	            this.format = Scope.format || 'YYYY-MM-DD HH:mm:ss';
-	            this.value = Scope.value;
-	            this.options = Scope.options;
-	            this.placeholder = Scope.placeholder || '请选择日期时间范围';
-	            this.formatVal = '';
-	            this.isOpened = false;
-	            this.SCOPE_ID = Math.round(Math.random() * 1e9);
-	        }
-	    }, {
-	        key: 'setConf',
-	        value: function setConf() {
-	            this.views = 'calendar';
-	            // 如果左值大于右值，则应该进行交换
-	            var start = this.Scope.value.start.valueOf();
-	            var end = this.Scope.value.end.valueOf();
-	            if (start > end) {
-	                var _ref = [this.Scope.value.end, this.Scope.value.start];
-	                this.Scope.value.start = _ref[0];
-	                this.Scope.value.end = _ref[1];
+	        key: 'removeDynamicPanel',
+	        value: function removeDynamicPanel(afterThat) {
+	            var _this2 = this;
+
+	            var isGlobal = this.Scope.isGlobal;
+	            var Timeout = this.Timeout;
+	            if (isGlobal === true) {
+	                (function () {
+	                    var docBody = _this2.Document.find('body')[0];
+	                    var dropdown = _this2.Document[0].getElementById('ng-picker-to-clone__' + _this2.SCOPE_ID);
+	                    var dropdownMask = _this2.Document[0].getElementById('ng-mask-to-clone__' + _this2.SCOPE_ID);
+	                    Timeout(function () {
+	                        docBody.removeChild(dropdown);
+	                        docBody.removeChild(dropdownMask);
+	                    }, 200);
+	                })();
 	            }
+	            afterThat && afterThat();
 	        }
 	    }, {
 	        key: 'setWatchers',
 	        value: function setWatchers() {
-	            var _this2 = this;
+	            var _this3 = this;
 
 	            var moment = this.Moment;
 	            this.Scope.$watch('value', function (v) {
@@ -690,13 +715,13 @@
 	                if (v.start != '' && v.end == '') {
 	                    v.end = moment(v.start).hour(0).minute(0).second(0);
 	                }
-	                _this2.Scope.onChange({
+	                _this3.Scope.onChange({
 	                    value: {
 	                        start: v.start.valueOf(),
 	                        end: v.end.valueOf()
 	                    }
 	                });
-	                _this2.setFormatVal(v.start, v.end, _this2.format);
+	                _this3.setFormatVal(v.start, v.end, _this3.format);
 	            }, true);
 	        }
 	    }, {
@@ -716,11 +741,15 @@
 	            var vmDp = this;
 	            this.viewMethods = {
 	                togglePicker: function togglePicker(open) {
-	                    vmDp.setDynamicPanel(function () {
-	                        vmDp.Timeout(function () {
-	                            vmDp.isOpened = open;
-	                        }, 0);
-	                    });
+	                    if (open) {
+	                        vmDp.setDynamicPanel(function () {
+	                            vmDp.Timeout(function () {
+	                                vmDp.isOpened = open;
+	                            }, 0);
+	                        });
+	                    } else {
+	                        vmDp.isOpened = open;
+	                    }
 	                },
 	                selectOption: function selectOption(conf) {
 	                    var start = conf.start;
