@@ -18,23 +18,24 @@
     <!-- css files will be automatically insert here -->
     <!-- endinject -->
     <!-- endbuild -->
-
     <style type="text/css">
-        #test-picker-ctn{
-            position: absolute;
-            width: 600px;
-            height: 600px;
-            overflow: hidden;
-            background-color: #fea;
-            left: 240px;
-            top: 100px;
-        }
-        #test-picker{
-         /*   position: absolute;
+    #test-picker-ctn {
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        overflow: hidden;
+        background-color: #fea;
+        left: 240px;
+        top: 100px;
+    }
+
+    #test-picker {
+        /*   position: absolute;
             left: 50%;
             top:20%;*/
-            margin: 60px 40px;
-        }
+        margin: 60px 40px;
+    }
+
     </style>
 </head>
 
@@ -58,20 +59,7 @@
     <div id="test-picker-ctn" ng-controller="RangeController as rctrl">
         <!-- <h1>日期时间组件（ng1.x）</h1> -->
         <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
-        <ng-date-picker 
-          id="test-picker"
-          style="width: 280px;" 
-          value="rctrl.dateConf.value" 
-          format="{{rctrl.dateConf.format}}" 
-          placeholder="{{rctrl.dateConf.placeholder}}" 
-          options="rctrl.dateConf.options"
-          on-ok="rctrl.okFunc(value)"
-          on-clear="rctrl.clearFunc()"
-          on-change="rctrl.changeFunc(value)"
-          is-global="rctrl.dateConf.isGlobal"
-          min-day="rctrl.dateConf.minDay"
-          max-day="rctrl.dateConf.maxDay"
-          pos="right"></ng-date-picker>
+        <ng-date-picker id="test-picker" style="width: 280px;" value="rctrl.dateConf.value" format="{{rctrl.dateConf.format}}" placeholder="{{rctrl.dateConf.placeholder}}" options="rctrl.dateConf.options" on-ok="rctrl.okFunc(value)" on-clear="rctrl.clearFunc()" on-change="rctrl.changeFunc(value)" is-global="rctrl.dateConf.isGlobal" min-day="rctrl.dateConf.minDay" max-day="rctrl.dateConf.maxDay" pos="right"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])
@@ -79,29 +67,26 @@
 
     function RangeCtrl() {
         var vm = this;
-        this.okFunc = function(value){
+        this.okFunc = function(value) {
             console.log('okkkkkkkkkk', value);
         }
-        this.clearFunc = function(){
+        this.clearFunc = function() {
             console.log('clearrrrrrr');
         }
-        this.changeFunc = function(value){
+        this.changeFunc = function(value) {
             console.log('changeeeeee', value);
         }
         this.dateConf = {
             isGlobal: true,
-            // minDay: moment().subtract(30, 'd'),
-            // maxDay: moment().add(3, 'M').add(2, 'y').add(2, 'day'),
             minDay: moment().subtract(30, 'd'),
             maxDay: moment(),
             value: {
                 start: moment().subtract(15, 'm'),
                 end: moment()
             },
-            format: 'YYYY-MM-DD HH:mm:ss',
-            placeholder: '请选择日期范围',
-            options: [
-                {
+            // format: 'MM/DD HH:mm',
+            placeholder: '请选择日期时间范围',
+            options: [{
                     name: '最近15分钟',
                     start: moment().subtract(15, 'm'),
                     end: moment()

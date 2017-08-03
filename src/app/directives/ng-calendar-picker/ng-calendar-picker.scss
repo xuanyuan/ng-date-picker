@@ -72,7 +72,6 @@ ng-calendar-picker {
                     color: #fff;
                 }
                 &.disabled>span {
-                    cursor: not-allowed;
                 	background-color: #fff;
                 	color: $disabled;
                 }
@@ -141,7 +140,6 @@ ng-calendar-picker {
                         color: #fff;
                     }
                     &.disabled>span {
-                        cursor: not-allowed;
                         background-color: #fff;
                         color: $disabled;
                     }

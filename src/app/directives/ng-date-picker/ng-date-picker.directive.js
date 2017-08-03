@@ -91,37 +91,39 @@ class NgDatePickerController {
             const docBody = this.Document.find('body');
             let dropdown = this.Document[0].getElementById(`ng-picker-to-clone__${this.SCOPE_ID}`);
             let dropdownMask = this.Document[0].getElementById(`ng-mask-to-clone__${this.SCOPE_ID}`);
-            docBody.append(dropdown);
-            docBody.append(dropdownMask);
-            this.CloneOutside = true;
-            const [inputWidth, inputHeight, panelWidth] = [pos.width, pos.height, 530];
-            const [baseLeft, baseTop] = [pos.left, pos.top];
-            const marginTop = 4;
+            if(dropdown && dropdownMask){
+                docBody.append(dropdown);
+                docBody.append(dropdownMask);
+                this.CloneOutside = true;
+                const [inputWidth, inputHeight, panelWidth] = [pos.width, pos.height, 530];
+                const [baseLeft, baseTop] = [pos.left, pos.top];
+                const marginTop = 4;
 
-            dropdown.style.top = `${baseTop}px`;
-            switch(posAttr){
-                case 'center':
-                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
-                    break;
-                case 'right':
-                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
-                    break;
-                case 'cover':
-                case 'cover-left':
-                    dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
-                    dropdown.style.left = `${baseLeft}px`;
-                    break;
-                case 'cover-center':
-                    dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
-                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
-                    break;
-                case 'cover-right':
-                    dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
-                    dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
-                    break;
-                default:
-                    dropdown.style.left = `${baseLeft}px`;
-                    break;
+                dropdown.style.top = `${baseTop}px`;
+                switch(posAttr){
+                    case 'center':
+                        dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
+                        break;
+                    case 'right':
+                        dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
+                        break;
+                    case 'cover':
+                    case 'cover-left':
+                        dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
+                        dropdown.style.left = `${baseLeft}px`;
+                        break;
+                    case 'cover-center':
+                        dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
+                        dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)/2}px`;
+                        break;
+                    case 'cover-right':
+                        dropdown.style.top = `${baseTop - inputHeight - marginTop}px`;
+                        dropdown.style.left = `${baseLeft - (panelWidth - inputWidth)}px`;
+                        break;
+                    default:
+                        dropdown.style.left = `${baseLeft}px`;
+                        break;
+                }
             }
             afterThat && afterThat();
         }
