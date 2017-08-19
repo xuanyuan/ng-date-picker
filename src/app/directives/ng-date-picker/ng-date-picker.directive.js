@@ -181,6 +181,7 @@ class NgDatePickerController {
 
     setViewMethods() {
         const vmDp = this;
+        const moment = this.Moment;
         this.viewMethods = {
             togglePicker(open) {
                 if(open){
@@ -197,9 +198,10 @@ class NgDatePickerController {
             selectOption(conf) {
                 const { start, end } = conf;
                 vmDp.value = vmDp.Scope.value = {
-                    start,
-                    end
+                    start: moment(start.valueOf()),
+                    end: moment(end.valueOf())
                 };
+
                 vmDp.setConf();
                 vmDp.isOpened = false;
             },
