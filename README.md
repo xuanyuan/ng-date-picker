@@ -4,6 +4,10 @@
 
 ----------
 
+![日期选择](./screenshots/date-pick.png)
+
+![时间选择](./screenshots/time-pick.png)
+
 Installation
 -------------
 bower:  
@@ -12,6 +16,13 @@ npm:
 `npm install`
 
 ----------
+
+Run
+-------------
+dev:  
+`gulp serve`
+build:  
+`gulp`
 
 Usage
 -------------

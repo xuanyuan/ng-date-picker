@@ -24,15 +24,15 @@
         width: 600px;
         height: 600px;
         overflow: hidden;
-        background-color: #fea;
+        border: 1px dashed #333;
         left: 240px;
         top: 100px;
     }
+    .show-time{
+        text-align: center;
+    }
 
     #test-picker {
-        /*   position: absolute;
-            left: 50%;
-            top:20%;*/
         margin: 60px 40px;
     }
 
@@ -58,7 +58,7 @@
     <!-- endbuild -->
     <div id="test-picker-ctn" ng-controller="RangeController as rctrl">
         <!-- <h1>日期时间组件（ng1.x）</h1> -->
-        <h2>{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
+        <h2 class="show-time">{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
         <ng-date-picker 
             id="test-picker" 
             style="width: 280px;" 
@@ -72,7 +72,7 @@
             is-global="rctrl.dateConf.isGlobal" 
             min-day="rctrl.dateConf.minDay" 
             max-day="rctrl.dateConf.maxDay" 
-            pos="right"></ng-date-picker>
+            pos="left"></ng-date-picker>
     </div>
     <script>
     angular.module('demo', ['ngDatetimeRangePicker'])
@@ -97,7 +97,7 @@
                 start: moment().subtract(15, 'm'),
                 end: moment()
             },
-            // format: 'MM/DD HH:mm',
+            format: 'YYYY/MM/DD HH:mm',
             placeholder: '请选择日期时间范围',
             options: [{
                     name: '最近15分钟',
