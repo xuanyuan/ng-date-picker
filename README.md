@@ -11,7 +11,9 @@
 Installation
 -------------
 bower:  
-`bower install`  
+
+`bower install` 
+
 npm:  
 `npm install`
 
@@ -19,8 +21,10 @@ npm:
 
 Run
 -------------
+
 dev:  
 `gulp serve`
+
 build:  
 `gulp`
 
