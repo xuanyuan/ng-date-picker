@@ -51,7 +51,7 @@ c. 使用指令`ng-date-picker`
           on-clear="rctrl.clearFunc()"
           on-change="rctrl.changeFunc(value)"
           is-global="rctrl.dateConf.isGlobal"
-          pos="cover"></ng-date-picker>
+          pos="right"></ng-date-picker>
 ```
 ----------
 
