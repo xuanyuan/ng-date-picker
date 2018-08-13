@@ -55,6 +55,9 @@ c. 使用指令`ng-date-picker`
           on-clear="rctrl.clearFunc()"
           on-change="rctrl.changeFunc(value)"
           is-global="rctrl.dateConf.isGlobal"
+          min-day="rctrl.dateConf.minDay"
+          max-day="rctrl.dateConf.maxDay"
+          min-view="rctrl.dateConf.minView"
           pos="right"></ng-date-picker>
 ```
 ----------
@@ -73,6 +76,7 @@ Configurations
 - [可选 Function] on-change：当值发生变化时回调的钩子函数（返回value参数）
 - [可选 Boolean] is-global: 是否应用到全局环境，默认为false，即相对input的位置出现。true情况下将添加到全局body中，此时不会被任何东西遮盖（比如父级的overhidden）
 - [可选 Attribute] pos: 组件面板出现的位置。在is-global配置为true的情况下生效。选项分别为`center right cover cover-center cover-left cover-right`。
+- [可选 Attribute] min-view: 指定显示面板显示的最视图（'time','calendar'），默认'time'显示左下角选择日期按钮，否则不显示。
 
 参考以下配置：
 
@@ -94,6 +98,9 @@ this.dateConf = {
     },
     format: 'YYYY-MM-DD HH:mm:ss',
     placeholder: '请选择日期范围',
+    minDay: moment().subtract(30, 'd'),
+    maxDay: moment(),
+    minView: 'time',
     options: [{
             name: '今天',
             start: moment().startOf('day'),
