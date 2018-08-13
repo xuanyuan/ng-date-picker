@@ -74,12 +74,12 @@
   "description": "一个全新的简洁美观的日期时间范围选择器",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xuanyuan/ngDatetimePicker.git"
+    "url": "git+https://github.com/xuanyuan/ng-date-picker.git"
   },
   "author": "xuanyuan",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/xuanyuan/ngDatetimePicker/issues"
+    "url": "https://github.com/xuanyuan/ng-date-picker/issues"
   },
-  "homepage": "https://github.com/xuanyuan/ngDatetimePicker#readme"
+  "homepage": "https://github.com/xuanyuan/ng-date-picker#readme"
 }
