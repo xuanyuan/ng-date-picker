@@ -59,19 +59,20 @@
     <div id="test-picker-ctn" ng-controller="RangeController as rctrl">
         <!-- <h1>日期时间组件（ng1.x）</h1> -->
         <h2 class="show-time">{{rctrl.dateConf.value.start.format("YYYY-MM-DD HH:mm:ss")}} - {{rctrl.dateConf.value.end.format("YYYY-MM-DD HH:mm:ss")}}</h2>
-        <ng-date-picker 
-            id="test-picker" 
-            style="width: 280px;" 
-            value="rctrl.dateConf.value" 
-            format="{{rctrl.dateConf.format}}" 
-            placeholder="{{rctrl.dateConf.placeholder}}" 
-            options="rctrl.dateConf.options" 
-            on-ok="rctrl.okFunc(value)" 
-            on-clear="rctrl.clearFunc()" 
-            on-change="rctrl.changeFunc(value)" 
-            is-global="rctrl.dateConf.isGlobal" 
-            min-day="rctrl.dateConf.minDay" 
-            max-day="rctrl.dateConf.maxDay" 
+        <ng-date-picker
+            id="test-picker"
+            style="width: 280px;"
+            value="rctrl.dateConf.value"
+            format="{{rctrl.dateConf.format}}"
+            placeholder="{{rctrl.dateConf.placeholder}}"
+            options="rctrl.dateConf.options"
+            on-ok="rctrl.okFunc(value)"
+            on-clear="rctrl.clearFunc()"
+            on-change="rctrl.changeFunc(value)"
+            is-global="rctrl.dateConf.isGlobal"
+            min-day="rctrl.dateConf.minDay"
+            max-day="rctrl.dateConf.maxDay"
+            min-view="rctrl.dateConf.minView"
             pos="left"></ng-date-picker>
     </div>
     <script>
@@ -97,7 +98,8 @@
                 start: moment().subtract(15, 'm'),
                 end: moment()
             },
-            format: 'YYYY/MM/DD HH:mm',
+            minView: 'time',
+            format: 'YYYY-MM-DD HH:mm:ss',
             placeholder: '请选择日期时间范围',
             options: [{
                     name: '最近15分钟',

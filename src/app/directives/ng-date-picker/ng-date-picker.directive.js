@@ -15,7 +15,8 @@ export function NgDatePicker() {
             onChange: '&',
             isGlobal: '=',
             minDay: '=',
-            maxDay: '='
+            maxDay: '=',
+            minView: '='
         },
         controller: NgDatePickerController,
         controllerAs: 'vmDp',
@@ -42,7 +43,9 @@ class NgDatePickerController {
 
     init() {
         const Win = this.Window;
+        // 配置静态参数
         this.setStaticConf();
+        // 处理初始值
         this.setConf();
         this.setViewMethods();
         this.setWatchers();
@@ -64,6 +67,7 @@ class NgDatePickerController {
         this.value = Scope.value;
         this.minDay = Scope.minDay;
         this.maxDay = Scope.maxDay;
+        this.minView = Scope.minView || 'time';
         this.options = Scope.options;
         this.placeholder = Scope.placeholder || '请选择日期时间范围';
         this.formatVal = '';
@@ -193,7 +197,7 @@ class NgDatePickerController {
                 }else{
                     vmDp.isOpened = open;
                 }
-                
+
             },
             selectOption(conf) {
                 const { start, end } = conf;
@@ -231,7 +235,7 @@ class NgDatePickerController {
     _getPickerPos(target){
         const rect = target.getBoundingClientRect();
         const ww = this.Window.innerWidth;
-        
+
         return {
             top: rect.top + rect.height,
             right: ww - (rect.left + rect.width),
